@@ -18,13 +18,13 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
 
-  /* Setup */
-  #setup-screen{max-width:620px;margin:48px auto;padding:0 20px;}
-  .setup-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;}
-  .setup-logo{font-size:22px;font-weight:700;letter-spacing:-.5px;margin-bottom:4px;}
-  .setup-sub{color:var(--muted);font-size:13px;margin-bottom:26px;}
-  .tabs{display:flex;gap:4px;margin-bottom:22px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px;}
-  .tab{flex:1;padding:7px;text-align:center;border-radius:4px;font-size:12px;font-weight:500;cursor:pointer;color:var(--muted);transition:all .15s;}
+  /* ── Setup ── */
+  #setup-screen{max-width:620px;margin:32px auto;padding:0 16px;}
+  .setup-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;}
+  .setup-logo{font-size:20px;font-weight:700;letter-spacing:-.5px;margin-bottom:4px;}
+  .setup-sub{color:var(--muted);font-size:13px;margin-bottom:22px;}
+  .tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px;}
+  .tab{flex:1;padding:7px 4px;text-align:center;border-radius:4px;font-size:11px;font-weight:500;cursor:pointer;color:var(--muted);transition:all .15s;}
   .tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08);}
   .tab-panel{display:none;}.tab-panel.active{display:block;}
   .field{margin-bottom:14px;}
@@ -32,47 +32,62 @@
   .field input,.field select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;}
   .field input:focus,.field select:focus{border-color:var(--accent);}
   .hint{font-size:11px;color:var(--hint);margin-top:4px;line-height:1.5;}
-  .divider{border:none;border-top:1px solid var(--border-light);margin:18px 0;}
-  .section-label{font-size:11px;font-weight:600;color:var(--hint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;}
+  .divider{border:none;border-top:1px solid var(--border-light);margin:16px 0;}
+  .section-label{font-size:11px;font-weight:600;color:var(--hint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
   .wh-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-  .btn-primary{width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:500;cursor:pointer;margin-top:6px;transition:opacity .15s;}
+  @media(max-width:500px){.wh-grid{grid-template-columns:1fr;}}
+  .btn-primary{width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:500;cursor:pointer;margin-top:6px;transition:opacity .15s;}
   .btn-primary:hover{opacity:.88;}
   .demo-link{text-align:center;margin-top:10px;font-size:12px;color:var(--muted);}
   .demo-link a{color:var(--accent);text-decoration:none;cursor:pointer;}
   .info-box{background:var(--processing-bg);border:1px solid var(--processing-border);border-radius:var(--radius-sm);padding:12px 14px;font-size:12px;color:var(--processing-text);margin-bottom:14px;line-height:1.7;}
   .info-box code{background:rgba(91,150,247,.15);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:11px;}
-  .schema-table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:14px;}
-  .schema-table th{background:var(--processing-bg);color:var(--processing-text);padding:5px 8px;text-align:left;border:1px solid var(--processing-border);font-weight:600;}
-  .schema-table td{padding:5px 8px;border:1px solid var(--border);color:var(--text);}
-  .schema-table tr:nth-child(even) td{background:var(--bg);}
 
-  /* App */
+  /* ── App ── */
   #app{display:none;min-height:100vh;}
-  .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;}
-  .topbar-left{display:flex;align-items:center;gap:12px;}
+
+  /* ── Topbar ── */
+  .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+  .topbar-left{display:flex;align-items:center;gap:10px;}
   .logo{font-size:15px;font-weight:700;letter-spacing:-.3px;}
-  .store-badge{font-size:11px;background:var(--processing-bg);color:var(--processing-text);padding:3px 9px;border-radius:20px;border:1px solid var(--processing-border);}
-  .topbar-right{display:flex;align-items:center;gap:8px;}
-  .btn-sm{padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;background:var(--surface);color:var(--text);cursor:pointer;transition:background .12s;}
+  .store-badge{font-size:11px;background:var(--processing-bg);color:var(--processing-text);padding:3px 8px;border-radius:20px;border:1px solid var(--processing-border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;}
+  .topbar-right{display:flex;align-items:center;gap:6px;}
+  .btn-sm{padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;background:var(--surface);color:var(--text);cursor:pointer;transition:background .12s;white-space:nowrap;}
   .btn-sm:hover{background:var(--bg);}
   .btn-sm.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-  #sync-status{font-size:12px;color:var(--muted);}
-  .sync-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--completed-border);margin-right:5px;animation:pulse 2s infinite;}
+  #sync-status{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+  .sync-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--completed-border);animation:pulse 2s infinite;flex-shrink:0;}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-  /* Stats */
-  .stats-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
-  .stat{background:var(--surface);padding:12px 16px;}
-  .stat-label{font-size:11px;color:var(--muted);margin-bottom:4px;}
-  .stat-value{font-size:18px;font-weight:600;letter-spacing:-.5px;}
+  /* ── Stats ── */
+  .stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
+  @media(min-width:600px){.stats-bar{grid-template-columns:repeat(6,1fr);}}
+  .stat{background:var(--surface);padding:10px 12px;}
+  .stat-label{font-size:10px;color:var(--muted);margin-bottom:3px;}
+  .stat-value{font-size:16px;font-weight:600;letter-spacing:-.5px;}
   .stat-value.green{color:#0d5c35;}.stat-value.blue{color:var(--accent);}
 
-  /* Pipeline */
-  .pipeline-wrap{padding:20px 24px;overflow-x:auto;}
-  .pipeline{display:grid;grid-template-columns:repeat(5,minmax(220px,1fr));gap:12px;align-items:start;min-width:1100px;}
-  .col{border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color .15s;}
+  /* ── Stage tabs (mobile) ── */
+  .stage-tabs{display:flex;overflow-x:auto;gap:6px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface);-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .stage-tabs::-webkit-scrollbar{display:none;}
+  .stage-tab{flex-shrink:0;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--muted);transition:all .15s;}
+  .stage-tab.active{border-color:var(--accent);color:var(--accent);background:var(--processing-bg);}
+  @media(min-width:900px){.stage-tabs{display:none;}}
+
+  /* ── Pipeline ── */
+  .pipeline-wrap{padding:16px;}
+  /* Mobile: show one column at a time */
+  .pipeline{display:block;}
+  .col{border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);overflow:hidden;margin-bottom:12px;display:none;}
+  .col.visible{display:block;}
+  /* Desktop: show all columns side by side */
+  @media(min-width:900px){
+    .pipeline{display:grid;grid-template-columns:repeat(5,minmax(200px,1fr));gap:12px;overflow-x:auto;align-items:start;}
+    .pipeline-wrap{padding:16px 20px;overflow-x:auto;}
+    .col{display:block;margin-bottom:0;}
+  }
   .col.drag-over{border-style:dashed;border-color:var(--accent);background:var(--processing-bg);}
-  .col-head{padding:11px 14px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;}
+  .col-head{padding:10px 14px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;}
   .col-title{font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px;}
   .status-pill{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;border:1px solid;}
   .pill-pending{background:var(--pending-bg);color:var(--pending-text);border-color:var(--pending-border);}
@@ -81,11 +96,12 @@
   .pill-refunded{background:var(--refunded-bg);color:var(--refunded-text);border-color:var(--refunded-border);}
   .pill-cancelled{background:var(--cancelled-bg);color:var(--cancelled-text);border-color:var(--cancelled-border);}
   .col-count{font-size:12px;color:var(--muted);font-weight:500;}
-  .cards-area{padding:10px;min-height:180px;}
+  .cards-area{padding:10px;min-height:120px;}
 
-  /* Cards */
-  .card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;margin-bottom:8px;cursor:grab;user-select:none;transition:border-color .12s,opacity .15s,transform .15s;}
-  .card:hover{border-color:#c0bfbb;transform:translateY(-1px);}
+  /* ── Cards ── */
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 13px;margin-bottom:8px;cursor:grab;user-select:none;transition:border-color .12s,opacity .15s,transform .15s;}
+  .card:hover{border-color:#c0bfbb;}
+  @media(min-width:900px){.card:hover{transform:translateY(-1px);}}
   .card:active{cursor:grabbing;opacity:.7;}
   .card.dragging{opacity:.35;}
   .card.auto-moved{animation:hl .8s ease;}
@@ -94,14 +110,14 @@
   .card-id{font-size:11px;color:var(--hint);font-weight:500;}
   .card-source{font-size:10px;color:var(--hint);background:var(--border-light);padding:2px 6px;border-radius:4px;}
   .card-name{font-size:13px;font-weight:600;margin-bottom:2px;}
-  .card-email{font-size:11px;color:var(--muted);margin-bottom:3px;}
-  .card-product{font-size:11px;color:var(--muted);margin-bottom:2px;}
-  .card-meta{display:flex;gap:8px;font-size:11px;color:var(--hint);margin-bottom:7px;flex-wrap:wrap;}
+  .card-email{font-size:11px;color:var(--muted);margin-bottom:3px;word-break:break-all;}
+  .card-product{font-size:11px;color:var(--muted);margin-bottom:3px;}
+  .card-meta{display:flex;gap:6px;font-size:11px;color:var(--hint);margin-bottom:7px;flex-wrap:wrap;}
   .card-footer{display:flex;align-items:center;justify-content:space-between;}
   .card-amount{font-size:13px;font-weight:700;}
   .card-time{font-size:11px;color:var(--hint);}
   .card-actions{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;}
-  .btn-action{font-size:11px;padding:4px 9px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:background .1s;white-space:nowrap;}
+  .btn-action{font-size:12px;padding:6px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:background .1s;white-space:nowrap;touch-action:manipulation;}
   .btn-action:hover{background:var(--border-light);}
   .btn-action.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
   .btn-action.primary:hover{opacity:.88;}
@@ -109,28 +125,33 @@
   .btn-action.danger:hover{background:var(--cancelled-bg);}
   .empty{text-align:center;padding:28px 0;color:var(--hint);font-size:12px;}
 
-  /* Log */
-  .log-panel{margin:0 24px 24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);}
-  .log-head{padding:10px 16px;border-bottom:1px solid var(--border-light);font-size:12px;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:space-between;}
-  .log-body{padding:8px 0;max-height:150px;overflow-y:auto;}
-  .log-row{padding:5px 16px;font-size:12px;display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--border-light);}
+  /* ── Log ── */
+  .log-panel{margin:0 16px 24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);}
+  @media(min-width:900px){.log-panel{margin:0 20px 24px;}}
+  .log-head{padding:10px 14px;border-bottom:1px solid var(--border-light);font-size:12px;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:space-between;}
+  .log-body{padding:8px 0;max-height:140px;overflow-y:auto;}
+  .log-row{padding:5px 14px;font-size:11px;display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid var(--border-light);}
   .log-row:last-child{border-bottom:none;}
-  .log-time{color:var(--hint);min-width:65px;font-variant-numeric:tabular-nums;}
-  .log-msg{color:var(--text);flex:1;}
-  .log-status{font-size:11px;font-weight:500;}
+  .log-time{color:var(--hint);min-width:60px;font-variant-numeric:tabular-nums;flex-shrink:0;}
+  .log-msg{color:var(--text);flex:1;line-height:1.5;}
+  .log-status{font-size:11px;font-weight:500;flex-shrink:0;}
   .log-ok{color:var(--completed-text);}.log-err{color:var(--cancelled-text);}.log-pend{color:var(--pending-text);}
 
-  /* Toast */
-  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a19;color:#fff;padding:8px 18px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap;z-index:999;}
+  /* ── Toast ── */
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1a19;color:#fff;padding:8px 18px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap;z-index:999;max-width:90vw;text-align:center;}
   #toast.show{opacity:1;}
 
-  /* Modal */
-  .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:100;align-items:center;justify-content:center;}
+  /* ── Modal ── */
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;align-items:flex-end;justify-content:center;}
+  @media(min-width:600px){.modal-bg{align-items:center;}}
   .modal-bg.open{display:flex;}
-  .modal{background:var(--surface);border-radius:var(--radius);padding:28px;width:500px;max-width:95vw;}
+  .modal{background:var(--surface);border-radius:var(--radius) var(--radius) 0 0;padding:24px;width:100%;max-width:100%;max-height:90vh;overflow-y:auto;}
+  @media(min-width:600px){.modal{border-radius:var(--radius);width:500px;max-width:95vw;max-height:none;}}
   .modal-title{font-size:16px;font-weight:600;margin-bottom:6px;}
-  .modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
-  .modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;}
+  .modal-sub{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.6;}
+  .modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;}
+  .modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;display:block;}
+  @media(min-width:600px){.modal-handle{display:none;}}
 </style>
 </head>
 <body>
@@ -139,21 +160,20 @@
 <div id="setup-screen">
   <div class="setup-card">
     <div class="setup-logo">Order Pipeline</div>
-    <div class="setup-sub">Kanban board that reads your Google Sheet, auto-advances orders, and fires n8n webhooks per stage</div>
+    <div class="setup-sub">Kanban board that reads your Google Sheet and fires n8n webhooks per stage</div>
 
     <div class="tabs">
-      <div class="tab active" onclick="switchTab('sheets')">Google Sheets</div>
+      <div class="tab active" onclick="switchTab('sheets')">Sheets</div>
       <div class="tab" onclick="switchTab('woo')">WooCommerce</div>
       <div class="tab" onclick="switchTab('shopify')">Shopify</div>
       <div class="tab" onclick="switchTab('demo')">Demo</div>
     </div>
 
-    <!-- Sheets -->
     <div class="tab-panel active" id="tab-sheets">
       <div class="info-box">
-        Your Google Sheet must have these exact column headers (row 1):<br>
-        <code>order_id</code> &nbsp;<code>product_id</code> &nbsp;<code>product_name</code> &nbsp;<code>category</code> &nbsp;<code>quantity</code> &nbsp;<code>unit_price</code> &nbsp;<code>total_price</code> &nbsp;<code>first_name</code> &nbsp;<code>last_name</code> &nbsp;<code>customer_email</code> &nbsp;<code>order_status</code> &nbsp;<code>order_date</code><br><br>
-        To publish: <strong>File → Share → Publish to web → CSV → Copy link</strong>
+        Sheet must have these headers in row 1:<br>
+        <code>order_id</code> <code>product_id</code> <code>product_name</code> <code>category</code> <code>quantity</code> <code>unit_price</code> <code>total_price</code> <code>first_name</code> <code>last_name</code> <code>customer_email</code> <code>order_status</code> <code>order_date</code><br><br>
+        Publish: <strong>File → Share → Publish to web → CSV → Copy link</strong>
       </div>
       <div class="field">
         <label>Published CSV URL</label>
@@ -162,39 +182,32 @@
       <div class="field">
         <label>Poll interval (seconds)</label>
         <input id="cfg-poll" type="number" value="30" min="10" max="600" />
-        <div class="hint">Dashboard re-reads the sheet at this interval and auto-moves any order whose status changed</div>
       </div>
     </div>
 
-    <!-- WooCommerce -->
     <div class="tab-panel" id="tab-woo">
       <div class="field"><label>Store URL</label><input id="cfg-url" placeholder="https://yourstore.com" /></div>
-      <div class="field"><label>Consumer Key</label><input id="cfg-key" placeholder="ck_xxxxxxxxxxxx" /><div class="hint">WooCommerce → Settings → Advanced → REST API</div></div>
+      <div class="field"><label>Consumer Key</label><input id="cfg-key" placeholder="ck_xxxxxxxxxxxx" /></div>
       <div class="field"><label>Consumer Secret</label><input id="cfg-secret" type="password" placeholder="cs_xxxxxxxxxxxx" /></div>
     </div>
 
-    <!-- Shopify -->
     <div class="tab-panel" id="tab-shopify">
       <div class="field"><label>Shop domain</label><input id="cfg-shop" placeholder="your-store.myshopify.com" /></div>
-      <div class="field"><label>Admin API token</label><input id="cfg-shopify-token" type="password" placeholder="shpat_xxxxxxxxxxxx" /><div class="hint">Shopify admin → Apps → Develop apps → API credentials</div></div>
+      <div class="field"><label>Admin API token</label><input id="cfg-shopify-token" type="password" placeholder="shpat_xxxxxxxxxxxx" /></div>
     </div>
 
-    <!-- Demo -->
     <div class="tab-panel" id="tab-demo">
-      <div class="info-box">Loads sample orders with all columns. Drag cards between columns and watch webhooks fire in the log.</div>
+      <div class="info-box">Loads sample orders. Drag cards or tap action buttons to move them between stages.</div>
     </div>
 
     <hr class="divider">
-    <div class="section-label">n8n webhook URLs — one per stage transition</div>
+    <div class="section-label">n8n webhook URLs</div>
     <div class="wh-grid">
+      <div class="field"><label>On → Pending</label><input id="wh-pending" placeholder="https://n8n.cloud/webhook/pending" /></div>
       <div class="field"><label>On → Processing</label><input id="wh-processing" placeholder="https://n8n.cloud/webhook/processing" /></div>
       <div class="field"><label>On → Completed</label><input id="wh-completed" placeholder="https://n8n.cloud/webhook/completed" /></div>
       <div class="field"><label>On → Refunded</label><input id="wh-refunded" placeholder="https://n8n.cloud/webhook/refunded" /></div>
       <div class="field"><label>On → Cancelled</label><input id="wh-cancelled" placeholder="https://n8n.cloud/webhook/cancelled" /></div>
-    </div>
-    <div class="field">
-      <label>n8n auto-advance (reply {"advance":true} from n8n to push order to next stage)</label>
-      <input id="wh-callback-secret" placeholder="optional — leave blank if not using auto-advance" />
     </div>
 
     <button class="btn-primary" onclick="launch()">Launch dashboard</button>
@@ -210,20 +223,23 @@
       <div class="store-badge" id="store-label">Demo</div>
     </div>
     <div class="topbar-right">
-      <span id="sync-status"><span class="sync-dot"></span>Live</span>
-      <button class="btn-sm" onclick="fetchOrders()">&#8635; Sync</button>
-      <button class="btn-sm" onclick="openSettings()">Webhooks</button>
+      <span id="sync-status"><span class="sync-dot"></span><span class="sync-label">Live</span></span>
+      <button class="btn-sm" onclick="fetchOrders()">&#8635;</button>
+      <button class="btn-sm" onclick="openSettings()">&#9965;</button>
     </div>
   </div>
 
   <div class="stats-bar">
-    <div class="stat"><div class="stat-label">Total orders</div><div class="stat-value blue" id="s-total">0</div></div>
+    <div class="stat"><div class="stat-label">Total</div><div class="stat-value blue" id="s-total">0</div></div>
     <div class="stat"><div class="stat-label">Pending</div><div class="stat-value" id="s-pending">0</div></div>
     <div class="stat"><div class="stat-label">Processing</div><div class="stat-value" id="s-processing">0</div></div>
     <div class="stat"><div class="stat-label">Completed</div><div class="stat-value green" id="s-completed">0</div></div>
     <div class="stat"><div class="stat-label">Cancelled</div><div class="stat-value" id="s-cancelled">0</div></div>
-    <div class="stat"><div class="stat-label">Revenue (completed)</div><div class="stat-value green" id="s-revenue">₦0</div></div>
+    <div class="stat"><div class="stat-label">Revenue</div><div class="stat-value green" id="s-revenue">₦0</div></div>
   </div>
+
+  <!-- Mobile stage tabs -->
+  <div class="stage-tabs" id="stage-tabs"></div>
 
   <div class="pipeline-wrap">
     <div class="pipeline" id="pipeline"></div>
@@ -241,11 +257,13 @@
 </div>
 
 <!-- SETTINGS MODAL -->
-<div class="modal-bg" id="settings-modal">
+<div class="modal-bg" id="settings-modal" onclick="handleModalBgClick(event)">
   <div class="modal">
+    <span class="modal-handle"></span>
     <div class="modal-title">Webhook settings</div>
-    <div class="modal-sub">Each URL is called when an order enters that stage. If n8n replies with <code style="background:var(--bg);padding:1px 5px;border-radius:3px;font-size:11px;">{"advance":true}</code> the order auto-moves to the next stage.</div>
+    <div class="modal-sub">Paste your n8n webhook URLs. Settings are saved in your browser so you never need to re-enter them.</div>
     <div class="wh-grid">
+      <div class="field"><label>On → Pending</label><input id="s-wh-pending"></div>
       <div class="field"><label>On → Processing</label><input id="s-wh-processing"></div>
       <div class="field"><label>On → Completed</label><input id="s-wh-completed"></div>
       <div class="field"><label>On → Refunded</label><input id="s-wh-refunded"></div>
@@ -262,11 +280,30 @@
 <div id="toast"></div>
 
 <script>
-const STAGES = ['pending','processing','completed','refunded','cancelled'];
-const LABELS = {pending:'Pending',processing:'Processing',completed:'Completed',refunded:'Refunded',cancelled:'Cancelled'};
-const NEXT   = {pending:'processing', processing:'completed'};
+const STAGES=['pending','processing','completed','refunded','cancelled'];
+const LABELS={pending:'Pending',processing:'Processing',completed:'Completed',refunded:'Refunded',cancelled:'Cancelled'};
+const NEXT={pending:'processing',processing:'completed'};
 
-let CONFIG={}, ORDERS=[], WEBHOOKS={}, POLL_MS=30000, pollTimer=null, dragId=null, activeTab='sheets';
+let CONFIG={},ORDERS=[],WEBHOOKS={},POLL_MS=30000,pollTimer=null,dragId=null,activeTab='sheets',activeStage='pending';
+
+/* ── localStorage persistence ── */
+function saveToStorage(){
+  try{
+    localStorage.setItem('op_webhooks',JSON.stringify(WEBHOOKS));
+    localStorage.setItem('op_config',JSON.stringify(CONFIG));
+    localStorage.setItem('op_poll',String(POLL_MS));
+  }catch(_){}
+}
+function loadFromStorage(){
+  try{
+    const wh=localStorage.getItem('op_webhooks');
+    const cfg=localStorage.getItem('op_config');
+    const poll=localStorage.getItem('op_poll');
+    if(wh)WEBHOOKS=JSON.parse(wh);
+    if(cfg)CONFIG=JSON.parse(cfg);
+    if(poll)POLL_MS=parseInt(poll)||30000;
+  }catch(_){}
+}
 
 /* ── Tabs ── */
 function switchTab(t){
@@ -275,11 +312,29 @@ function switchTab(t){
   ['sheets','woo','shopify','demo'].forEach(id=>document.getElementById('tab-'+id).classList.toggle('active',id===t));
 }
 
+/* ── Mobile stage tabs ── */
+function renderStageTabs(){
+  const container=document.getElementById('stage-tabs');
+  container.innerHTML=STAGES.map(s=>{
+    const count=ORDERS.filter(o=>o.status===s).length;
+    return `<div class="stage-tab${s===activeStage?' active':''}" onclick="setActiveStage('${s}')">${LABELS[s]} <span style="opacity:.6">${count}</span></div>`;
+  }).join('');
+}
+function setActiveStage(s){
+  activeStage=s;
+  document.querySelectorAll('.col').forEach(el=>{
+    el.classList.toggle('visible',el.id==='col-'+s);
+  });
+  document.querySelectorAll('.stage-tab').forEach((el,i)=>{
+    el.classList.toggle('active',STAGES[i]===s);
+  });
+}
+
 /* ── Toast ── */
 function toast(msg){
   const el=document.getElementById('toast');
-  el.textContent=msg; el.classList.add('show');
-  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2600);
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2600);
 }
 
 /* ── Log ── */
@@ -290,7 +345,7 @@ function logEntry(msg,status='ok'){
   if(body.children.length===1&&body.children[0].textContent.includes('Waiting'))body.innerHTML='';
   const cls={ok:'log-ok',err:'log-err',pending:'log-pend'}[status]||'log-ok';
   const label={ok:'OK',err:'Failed',pending:'Sent'}[status]||'OK';
-  const row=document.createElement('div'); row.className='log-row';
+  const row=document.createElement('div');row.className='log-row';
   row.innerHTML=`<span class="log-time">${time}</span><span class="log-msg">${msg}</span><span class="log-status ${cls}">${label}</span>`;
   body.prepend(row);
   if(body.children.length>60)body.lastChild.remove();
@@ -298,22 +353,22 @@ function logEntry(msg,status='ok'){
 function clearLog(){document.getElementById('log-body').innerHTML='<div class="log-row"><span class="log-time">--:--:--</span><span class="log-msg">Log cleared</span></div>';}
 
 /* ── Webhook ── */
-async function fireWebhook(order, newStatus){
+async function fireWebhook(order,newStatus){
   const url=WEBHOOKS[newStatus];
   const payload={
-    order_id:order.id, order_number:order.number,
-    first_name:order.firstName, last_name:order.lastName,
+    order_id:order.id,order_number:order.number,
+    first_name:order.firstName,last_name:order.lastName,
     customer_email:order.email,
-    product_id:order.productId, product_name:order.productName,
-    category:order.category, quantity:order.quantity,
-    unit_price:order.unitPrice, total_price:order.totalPrice,
-    order_status:newStatus, previous_status:order.status,
+    product_id:order.productId,product_name:order.productName,
+    category:order.category,quantity:order.quantity,
+    unit_price:order.unitPrice,total_price:order.totalPrice,
+    order_status:newStatus,previous_status:order.status,
     order_date:order.orderDate,
     next_stage:NEXT[newStatus]||null,
     timestamp:new Date().toISOString(),
     source:order.source||'dashboard'
   };
-  logEntry(`Webhook → ${LABELS[newStatus]} for ${order.number}`, 'pending');
+  logEntry(`Webhook → ${LABELS[newStatus]} for ${order.number}`,'pending');
   if(!url){logEntry(`No webhook URL set for "${newStatus}" — skipped`,'err');return false;}
   try{
     let advance=false;
@@ -330,14 +385,14 @@ async function fireWebhook(order, newStatus){
 }
 
 /* ── Move order ── */
-async function moveOrder(id, newStatus){
+async function moveOrder(id,newStatus){
   const order=ORDERS.find(o=>o.id===id);
   if(!order||order.status===newStatus)return;
   const prev=order.status;
-  order.status=newStatus; order.updatedAt='just now';
+  order.status=newStatus;order.updatedAt='just now';
   if(CONFIG.platform==='woocommerce'&&CONFIG.url)updateWooStatus(order,newStatus);
   if(CONFIG.platform==='shopify'&&CONFIG.shop)updateShopifyStatus(order,newStatus);
-  render(); toast(`${order.number} → ${LABELS[newStatus]}`);
+  render();toast(`${order.number} → ${LABELS[newStatus]}`);
   highlightCard(id);
   const shouldAdvance=await fireWebhook({...order,status:prev},newStatus);
   if(shouldAdvance&&NEXT[newStatus]){
@@ -350,53 +405,41 @@ function highlightCard(id){
   if(el){el.classList.add('auto-moved');setTimeout(()=>el.classList.remove('auto-moved'),900);}
 }
 
-/* ── Google Sheets CSV parser ── */
+/* ── CSV parser ── */
 function parseCSV(text){
   const lines=text.trim().split('\n');
   const headers=lines[0].split(',').map(h=>h.replace(/^"|"$/g,'').trim().toLowerCase().replace(/\s+/g,'_'));
   const col=k=>headers.indexOf(k);
   return lines.slice(1).filter(r=>r.trim()).map((line,i)=>{
-    // Handle quoted commas
-    const cols=[]; let cur='', inQ=false;
+    const cols=[];let cur='',inQ=false;
     for(let c of line){if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){cols.push(cur.trim());cur='';}else{cur+=c;}}
     cols.push(cur.trim());
-    const g=k=>cols[col(k)]||'';
+    const g=k=>(cols[col(k)]||'').replace(/^"|"$/g,'');
     const rawStatus=(g('order_status')||'pending').toLowerCase().trim();
     const totalRaw=g('total_price')||g('amount')||'0';
-    return {
+    return{
       id:g('order_id')||String(i+1000),
       number:'#'+(g('order_id')||String(1000+i)),
-      firstName:g('first_name'), lastName:g('last_name'),
+      firstName:g('first_name'),lastName:g('last_name'),
       name:(g('first_name')+' '+g('last_name')).trim()||'Unknown',
       email:g('customer_email'),
-      productId:g('product_id'), productName:g('product_name'),
-      category:g('category'), quantity:g('quantity'),
-      unitPrice:g('unit_price'),
-      totalPrice:totalRaw,
+      productId:g('product_id'),productName:g('product_name'),
+      category:g('category'),quantity:g('quantity'),
+      unitPrice:g('unit_price'),totalPrice:totalRaw,
       amount:'₦'+parseFloat(String(totalRaw).replace(/[^\d.]/g,'')||'0').toLocaleString('en-NG'),
       status:mapStatus(rawStatus),
-      orderDate:g('order_date'),
-      updatedAt:g('order_date')||'from sheet',
+      orderDate:g('order_date'),updatedAt:g('order_date')||'from sheet',
       source:'Google Sheets'
     };
   });
 }
-
 function mapStatus(s){
-  return {
-    pending:'pending','on-hold':'pending',new:'pending',
-    processing:'processing','in progress':'processing',active:'processing',
-    completed:'completed',done:'completed',delivered:'completed',paid:'completed',
-    refunded:'refunded',refund:'refunded',
-    cancelled:'cancelled',canceled:'cancelled',rejected:'cancelled'
-  }[s]||'pending';
+  return{pending:'pending','on-hold':'pending',new:'pending',processing:'processing','in progress':'processing',active:'processing',completed:'completed',done:'completed',delivered:'completed',paid:'completed',refunded:'refunded',refund:'refunded',cancelled:'cancelled',canceled:'cancelled',rejected:'cancelled'}[s]||'pending';
 }
-
 async function fetchSheetsOrders(){
   const res=await fetch(CONFIG.sheetsUrl+'&cb='+Date.now());
   return parseCSV(await res.text());
 }
-
 async function syncAndAutoMove(){
   if(CONFIG.platform!=='sheets'||!CONFIG.sheetsUrl)return;
   try{
@@ -404,10 +447,8 @@ async function syncAndAutoMove(){
     let moved=0;
     fresh.forEach(n=>{
       const ex=ORDERS.find(o=>o.id===n.id);
-      if(ex&&ex.status!==n.status){
-        logEntry(`Sheet update: ${n.number} ${LABELS[ex.status]} → ${LABELS[n.status]}`,'pending');
-        moveOrder(n.id,n.status); moved++;
-      } else if(!ex){ ORDERS.push(n); }
+      if(ex&&ex.status!==n.status){logEntry(`Sheet update: ${n.number} ${LABELS[ex.status]} → ${LABELS[n.status]}`,'pending');moveOrder(n.id,n.status);moved++;}
+      else if(!ex){ORDERS.push(n);}
     });
     if(moved===0)render();
   }catch(e){logEntry('Sheet sync error: '+e.message,'err');}
@@ -418,19 +459,7 @@ async function fetchWooOrders(){
   const auth=btoa(`${CONFIG.key}:${CONFIG.secret}`);
   const res=await fetch(`${CONFIG.url}/wp-json/wc/v3/orders?per_page=50&orderby=date&order=desc`,{headers:{'Authorization':`Basic ${auth}`}});
   const data=await res.json();
-  return data.map(o=>({
-    id:String(o.id), number:`#${o.number}`,
-    firstName:o.billing.first_name, lastName:o.billing.last_name,
-    name:`${o.billing.first_name} ${o.billing.last_name}`,
-    email:o.billing.email,
-    productId:'', productName:o.line_items.map(i=>i.name).join(', ').substring(0,40),
-    category:'', quantity:o.line_items.reduce((a,i)=>a+i.quantity,0),
-    unitPrice:'', totalPrice:o.total,
-    amount:'₦'+parseFloat(o.total).toLocaleString('en-NG'),
-    status:mapStatus(o.status),
-    orderDate:o.date_created?.substring(0,10)||'',
-    updatedAt:timeAgo(o.date_modified), source:'WooCommerce'
-  }));
+  return data.map(o=>({id:String(o.id),number:`#${o.number}`,firstName:o.billing.first_name,lastName:o.billing.last_name,name:`${o.billing.first_name} ${o.billing.last_name}`,email:o.billing.email,productId:'',productName:o.line_items.map(i=>i.name).join(', ').substring(0,40),category:'',quantity:o.line_items.reduce((a,i)=>a+i.quantity,0),unitPrice:'',totalPrice:o.total,amount:'₦'+parseFloat(o.total).toLocaleString('en-NG'),status:mapStatus(o.status),orderDate:o.date_created?.substring(0,10)||'',updatedAt:timeAgo(o.date_modified),source:'WooCommerce'}));
 }
 async function updateWooStatus(order,ns){
   const auth=btoa(`${CONFIG.key}:${CONFIG.secret}`);
@@ -441,29 +470,17 @@ async function updateWooStatus(order,ns){
 async function fetchShopifyOrders(){
   const res=await fetch(`https://${CONFIG.shop}/admin/api/2024-01/orders.json?limit=50&status=any`,{headers:{'X-Shopify-Access-Token':CONFIG.shopifyToken,'Content-Type':'application/json'}});
   const data=await res.json();
-  return (data.orders||[]).map(o=>({
-    id:String(o.id), number:`#${o.order_number}`,
-    firstName:o.customer?.first_name||'', lastName:o.customer?.last_name||'',
-    name:(`${o.customer?.first_name||''} ${o.customer?.last_name||''}`).trim()||'Guest',
-    email:o.customer?.email||'',
-    productId:'', productName:(o.line_items||[]).map(i=>i.title).join(', ').substring(0,40),
-    category:'', quantity:(o.line_items||[]).reduce((a,i)=>a+i.quantity,0),
-    unitPrice:'', totalPrice:o.total_price,
-    amount:'₦'+parseFloat(o.total_price||0).toLocaleString('en-NG'),
-    status:mapStatus(o.fulfillment_status||o.financial_status),
-    orderDate:o.created_at?.substring(0,10)||'',
-    updatedAt:timeAgo(o.updated_at), source:'Shopify'
-  }));
+  return(data.orders||[]).map(o=>({id:String(o.id),number:`#${o.order_number}`,firstName:o.customer?.first_name||'',lastName:o.customer?.last_name||'',name:(`${o.customer?.first_name||''} ${o.customer?.last_name||''}`).trim()||'Guest',email:o.customer?.email||'',productId:'',productName:(o.line_items||[]).map(i=>i.title).join(', ').substring(0,40),category:'',quantity:(o.line_items||[]).reduce((a,i)=>a+i.quantity,0),unitPrice:'',totalPrice:o.total_price,amount:'₦'+parseFloat(o.total_price||0).toLocaleString('en-NG'),status:mapStatus(o.fulfillment_status||o.financial_status),orderDate:o.created_at?.substring(0,10)||'',updatedAt:timeAgo(o.updated_at),source:'Shopify'}));
 }
 async function updateShopifyStatus(order,ns){
   if(ns==='completed')fetch(`https://${CONFIG.shop}/admin/api/2024-01/orders/${order.id}/fulfillments.json`,{method:'POST',headers:{'X-Shopify-Access-Token':CONFIG.shopifyToken,'Content-Type':'application/json'},body:JSON.stringify({fulfillment:{notify_customer:true}})}).catch(()=>{});
 }
 
-/* ── Demo data ── */
+/* ── Demo ── */
 function demoOrders(){
-  return [
+  return[
     {id:'d1',number:'#1001',firstName:'Bolu',lastName:'Adeyemi',name:'Bolu Adeyemi',email:'bolu@example.com',productId:'P001',productName:'Web Design Package',category:'Digital Services',quantity:'1',unitPrice:'84000',totalPrice:'84000',amount:'₦84,000',status:'pending',orderDate:'2025-06-01',updatedAt:'2m ago',source:'Sheet'},
-    {id:'d2',number:'#1002',firstName:'Chidi',lastName:'Okafor',name:'Chidi Okafor',email:'chidi@example.com',productId:'P002',productName:'SEO Audit',category:'Marketing',quantity:'1',unitPrice:'210500',totalPrice:'210500',amount:'₦210,500',status:'pending',orderDate:'2025-06-02',updatedAt:'15m ago',source:'Sheet'},
+    {id:'d2',number:'#1002',firstName:'Chidi',lastName:'Okafor',name:'Chidi Okafor',email:'chidi@example.com',productId:'P002',productName:'SEO Audit',category:'Marketing',quantity:'1',unitPrice:'50000',totalPrice:'50000',amount:'₦50,000',status:'pending',orderDate:'2025-06-02',updatedAt:'15m ago',source:'Sheet'},
     {id:'d3',number:'#1003',firstName:'Akin',lastName:'Salami',name:'Akin Salami',email:'akin@example.com',productId:'P003',productName:'Logo Design',category:'Branding',quantity:'3',unitPrice:'18333',totalPrice:'55000',amount:'₦55,000',status:'processing',orderDate:'2025-06-03',updatedAt:'1h ago',source:'Sheet'},
     {id:'d4',number:'#1004',firstName:'Ngozi',lastName:'Eze',name:'Ngozi Eze',email:'ngozi@example.com',productId:'P004',productName:'Social Media Kit',category:'Marketing',quantity:'1',unitPrice:'120000',totalPrice:'120000',amount:'₦120,000',status:'processing',orderDate:'2025-06-04',updatedAt:'2h ago',source:'Sheet'},
     {id:'d5',number:'#1005',firstName:'Zara',lastName:'Musa',name:'Zara Musa',email:'zara@example.com',productId:'P005',productName:'E-commerce Setup',category:'Digital Services',quantity:'1',unitPrice:'300000',totalPrice:'300000',amount:'₦300,000',status:'completed',orderDate:'2025-06-05',updatedAt:'3h ago',source:'Sheet'},
@@ -472,28 +489,37 @@ function demoOrders(){
   ];
 }
 
-/* ── Master fetch ── */
+/* ── Fetch ── */
 async function fetchOrders(){
-  document.getElementById('sync-status').innerHTML='<span class="sync-dot" style="background:#f0c84a"></span>Syncing...';
+  document.getElementById('sync-status').innerHTML='<span class="sync-dot" style="background:#f0c84a"></span><span class="sync-label">Syncing</span>';
   try{
-    if(CONFIG.platform==='sheets'&&CONFIG.sheetsUrl)        ORDERS=await fetchSheetsOrders();
-    else if(CONFIG.platform==='woocommerce'&&CONFIG.url)    ORDERS=await fetchWooOrders();
-    else if(CONFIG.platform==='shopify'&&CONFIG.shop)       ORDERS=await fetchShopifyOrders();
-    else                                                     ORDERS=demoOrders();
+    if(CONFIG.platform==='sheets'&&CONFIG.sheetsUrl)ORDERS=await fetchSheetsOrders();
+    else if(CONFIG.platform==='woocommerce'&&CONFIG.url)ORDERS=await fetchWooOrders();
+    else if(CONFIG.platform==='shopify'&&CONFIG.shop)ORDERS=await fetchShopifyOrders();
+    else ORDERS=demoOrders();
     render();
-    document.getElementById('sync-status').innerHTML='<span class="sync-dot"></span>Live';
+    document.getElementById('sync-status').innerHTML='<span class="sync-dot"></span><span class="sync-label">Live</span>';
   }catch(e){
     toast('Sync failed: '+e.message);
-    document.getElementById('sync-status').innerHTML='<span class="sync-dot" style="background:#f25555"></span>Error';
+    document.getElementById('sync-status').innerHTML='<span class="sync-dot" style="background:#f25555"></span><span class="sync-label">Error</span>';
     if(!ORDERS.length){ORDERS=demoOrders();render();}
   }
 }
 
 /* ── Render ── */
 function render(){
-  document.getElementById('pipeline').innerHTML=STAGES.map(s=>colHTML(s)).join('');
+  const pipeline=document.getElementById('pipeline');
+  pipeline.innerHTML=STAGES.map(s=>colHTML(s)).join('');
+  const isMobile=window.innerWidth<900;
+  if(isMobile){
+    STAGES.forEach(s=>{
+      const col=document.getElementById('col-'+s);
+      if(col)col.classList.toggle('visible',s===activeStage);
+    });
+  }
   STAGES.forEach(s=>{
     const col=document.getElementById('col-'+s);
+    if(!col)return;
     col.addEventListener('dragover',e=>{e.preventDefault();col.classList.add('drag-over');});
     col.addEventListener('dragleave',()=>col.classList.remove('drag-over'));
     col.addEventListener('drop',e=>{e.preventDefault();col.classList.remove('drag-over');if(dragId)moveOrder(dragId,s);dragId=null;});
@@ -510,6 +536,7 @@ function render(){
   document.getElementById('s-completed').textContent=completed.length;
   document.getElementById('s-cancelled').textContent=ORDERS.filter(o=>o.status==='cancelled').length;
   document.getElementById('s-revenue').textContent='₦'+revenue.toLocaleString('en-NG');
+  renderStageTabs();
 }
 
 function colHTML(status){
@@ -518,10 +545,7 @@ function colHTML(status){
   const cards=orders.length
     ?orders.map(o=>`
       <div class="card" draggable="true" data-id="${o.id}">
-        <div class="card-header">
-          <span class="card-id">${o.number}</span>
-          <span class="card-source">${o.source||''}</span>
-        </div>
+        <div class="card-header"><span class="card-id">${o.number}</span><span class="card-source">${o.source||''}</span></div>
         <div class="card-name">${o.name}</div>
         <div class="card-email">${o.email||''}</div>
         <div class="card-product">${o.productName||''}</div>
@@ -530,10 +554,7 @@ function colHTML(status){
           ${o.quantity?`<span>Qty: ${o.quantity}</span>`:''}
           ${o.orderDate?`<span>${o.orderDate}</span>`:''}
         </div>
-        <div class="card-footer">
-          <span class="card-amount">${o.amount}</span>
-          <span class="card-time">${o.updatedAt}</span>
-        </div>
+        <div class="card-footer"><span class="card-amount">${o.amount}</span><span class="card-time">${o.updatedAt}</span></div>
         <div class="card-actions">
           ${next?`<button class="btn-action primary" onclick="moveOrder('${o.id}','${next}')">→ ${LABELS[next]}</button>`:''}
           ${!['cancelled','completed','refunded'].includes(status)?`<button class="btn-action danger" onclick="moveOrder('${o.id}','cancelled')">Cancel</button>`:''}
@@ -541,19 +562,13 @@ function colHTML(status){
         </div>
       </div>`).join('')
     :`<div class="empty">No ${LABELS[status].toLowerCase()} orders</div>`;
-  return `
-    <div class="col" id="col-${status}">
-      <div class="col-head">
-        <div class="col-title"><span class="status-pill pill-${status}">${LABELS[status]}</span></div>
-        <span class="col-count">${orders.length}</span>
-      </div>
-      <div class="cards-area">${cards}</div>
-    </div>`;
+  return`<div class="col" id="col-${status}"><div class="col-head"><div class="col-title"><span class="status-pill pill-${status}">${LABELS[status]}</span></div><span class="col-count">${orders.length}</span></div><div class="cards-area">${cards}</div></div>`;
 }
 
 /* ── Launch ── */
 function launch(){
   WEBHOOKS={
+    pending:document.getElementById('wh-pending').value,
     processing:document.getElementById('wh-processing').value,
     completed:document.getElementById('wh-completed').value,
     refunded:document.getElementById('wh-refunded').value,
@@ -573,6 +588,7 @@ function launch(){
     CONFIG={platform:'demo'};
     document.getElementById('store-label').textContent='Demo store';
   }
+  saveToStorage();
   document.getElementById('setup-screen').style.display='none';
   document.getElementById('app').style.display='block';
   fetchOrders();
@@ -581,29 +597,48 @@ function launch(){
 }
 function launchDirect(t){activeTab=t;launch();}
 
+/* ── Auto-launch if saved config exists ── */
+window.addEventListener('DOMContentLoaded',()=>{
+  loadFromStorage();
+  if(CONFIG.platform){
+    const label=CONFIG.platform==='sheets'?'Google Sheets':CONFIG.platform==='woocommerce'?(CONFIG.url||'WooCommerce'):CONFIG.platform==='shopify'?(CONFIG.shop||'Shopify'):'Demo store';
+    document.getElementById('store-label').textContent=label;
+    document.getElementById('setup-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    fetchOrders();
+    clearInterval(pollTimer);
+    pollTimer=setInterval(()=>{if(CONFIG.platform==='sheets')syncAndAutoMove();else fetchOrders();},POLL_MS);
+  }
+  window.addEventListener('resize',()=>{
+    const isMobile=window.innerWidth<900;
+    if(!isMobile){document.querySelectorAll('.col').forEach(el=>el.classList.add('visible'));}
+    else{STAGES.forEach(s=>{const col=document.getElementById('col-'+s);if(col)col.classList.toggle('visible',s===activeStage);});}
+  });
+});
+
 /* ── Settings ── */
 function openSettings(){
-  ['processing','completed','refunded','cancelled'].forEach(k=>document.getElementById('s-wh-'+k).value=WEBHOOKS[k]||'');
+  ['pending','processing','completed','refunded','cancelled'].forEach(k=>document.getElementById('s-wh-'+k).value=WEBHOOKS[k]||'');
   document.getElementById('s-poll').value=POLL_MS/1000;
   document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettings(){document.getElementById('settings-modal').classList.remove('open');}
+function handleModalBgClick(e){if(e.target===document.getElementById('settings-modal'))closeSettings();}
 function saveSettings(){
-  ['processing','completed','refunded','cancelled'].forEach(k=>WEBHOOKS[k]=document.getElementById('s-wh-'+k).value);
+  ['pending','processing','completed','refunded','cancelled'].forEach(k=>WEBHOOKS[k]=document.getElementById('s-wh-'+k).value);
   POLL_MS=(parseInt(document.getElementById('s-poll').value)||30)*1000;
+  saveToStorage();
   clearInterval(pollTimer);
   pollTimer=setInterval(()=>{if(CONFIG.platform==='sheets')syncAndAutoMove();else fetchOrders();},POLL_MS);
-  closeSettings(); toast('Settings saved');
+  closeSettings();toast('Settings saved');
 }
 
 /* ── Utils ── */
 function timeAgo(d){
   if(!d)return'';
   const s=Math.floor((Date.now()-new Date(d))/1000);
-  if(s<60)return'just now';
-  if(s<3600)return`${Math.floor(s/60)}m ago`;
-  if(s<86400)return`${Math.floor(s/3600)}h ago`;
-  return`${Math.floor(s/86400)}d ago`;
+  if(s<60)return'just now';if(s<3600)return`${Math.floor(s/60)}m ago`;
+  if(s<86400)return`${Math.floor(s/3600)}h ago`;return`${Math.floor(s/86400)}d ago`;
 }
 </script>
 </body>
