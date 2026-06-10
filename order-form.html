@@ -326,7 +326,7 @@ async function submitOrder(){
 
   try {
     // 1. Write to Google Sheets via Apps Script
-    if(SHEETS_URL && SHEETS_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
+    if(SHEETS_URL && SHEETS_URL !== 'https://script.google.com/macros/s/AKfycbyfhVORQabYSoH15AUj80cPhVfAlfURruABtJuN_KEDIH9KsptaQ62hZwtX9-qieWJz/exec'){
       await fetch(SHEETS_URL, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
@@ -336,7 +336,7 @@ async function submitOrder(){
     }
 
     // 2. Fire n8n pending webhook
-    if(N8N_WEBHOOK && N8N_WEBHOOK !== 'YOUR_N8N_PENDING_WEBHOOK_URL'){
+    if(N8N_WEBHOOK && N8N_WEBHOOK !== 'https://jamiusanni.app.n8n.cloud/webhook-test/orders'){
       await fetch(N8N_WEBHOOK, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
