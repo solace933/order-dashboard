@@ -361,17 +361,34 @@ async function submitOrder(){
 }
 
 function resetForm(){
-  document.getElementById('form-wrap').style.display   = 'block';
+  // Reset button state first
+  const btn = document.getElementById('btn-submit');
+  btn.classList.remove('loading');
+  btn.disabled = false;
+
+  // Reset screens
+  document.getElementById('form-wrap').style.display      = 'block';
   document.getElementById('success-screen').style.display = 'none';
-  document.getElementById('first_name').value  = '';
-  document.getElementById('last_name').value   = '';
-  document.getElementById('customer_email').value = '';
-  document.getElementById('quantity').value    = '1';
-  document.getElementById('notes').value       = '';
+
+  // Clear all fields
+  document.getElementById('first_name').value         = '';
+  document.getElementById('last_name').value          = '';
+  document.getElementById('customer_email').value     = '';
+  document.getElementById('quantity').value           = '1';
+  document.getElementById('notes').value              = '';
   document.getElementById('unit_price_display').value = '';
-  document.getElementById('summary-box').style.display = 'none';
-  document.querySelectorAll('.product-card').forEach(el => el.classList.remove('selected'));
+  document.getElementById('product_id').value         = '';
+  document.getElementById('product_name').value       = '';
+  document.getElementById('category').value           = '';
+  document.getElementById('unit_price').value         = '';
+
+  // Reset UI states
+  document.getElementById('summary-box').style.display    = 'none';
+  document.getElementById('alert-error').classList.remove('show');
+  document.getElementById('product-err').style.display    = 'none';
+  document.querySelectorAll('.product-card').forEach(el   => el.classList.remove('selected'));
   document.querySelectorAll('.field input,.field select').forEach(el => el.classList.remove('error'));
+
   selectedProduct = null;
   window.scrollTo({top:0, behavior:'smooth'});
 }
