@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jawtech — Place an Order</title>
+<style>
+  :root {
+    --accent:#1a3f8f;--accent-light:#eef4ff;--accent-border:#5b96f7;
+    --bg:#f4f6fb;--surface:#ffffff;--border:#e5e4e0;--border-light:#f0efeb;
+    --text:#1a1a19;--muted:#6b6b68;--hint:#a0a09c;
+    --success-bg:#edfaf3;--success-border:#34c97a;--success-text:#0d5c35;
+    --error-bg:#fef1f1;--error-border:#f25555;--error-text:#7a1515;
+    --radius:12px;--radius-sm:7px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
+
+  /* ── Header ── */
+  .header{background:var(--accent);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .header-logo{font-size:18px;font-weight:700;color:#fff;letter-spacing:-.3px;}
+  .header-sub{font-size:12px;color:#a8c0ff;}
+
+  /* ── Hero ── */
+  .hero{background:linear-gradient(135deg,#1a3f8f 0%,#2d5fd4 100%);padding:40px 24px 48px;text-align:center;}
+  .hero-title{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.5px;margin-bottom:8px;}
+  .hero-sub{font-size:14px;color:#a8c0ff;line-height:1.6;max-width:420px;margin:0 auto;}
+  @media(min-width:600px){.hero-title{font-size:32px;}}
+
+  /* ── Form card ── */
+  .form-wrap{max-width:640px;margin:-24px auto 40px;padding:0 16px;}
+  .form-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);}
+  .form-section{padding:24px 24px 0;}
+  .section-title{font-size:11px;font-weight:700;color:var(--hint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--border-light);}
+  .form-grid{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:500px){.form-grid.two{grid-template-columns:1fr 1fr;}}
+  .field{display:flex;flex-direction:column;gap:5px;}
+  .field label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+  .field input,.field select,.field textarea{padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;width:100%;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(26,63,143,.08);}
+  .field input.error,.field select.error{border-color:#f25555;}
+  .field .err-msg{font-size:11px;color:#f25555;display:none;}
+  .field input.error ~ .err-msg,.field select.error ~ .err-msg{display:block;}
+  .hint{font-size:11px;color:var(--hint);}
+
+  /* ── Product card selector ── */
+  .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
+  @media(min-width:500px){.product-grid{grid-template-columns:repeat(3,1fr);}}
+  .product-card{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 10px;cursor:pointer;transition:all .15s;text-align:center;background:var(--surface);}
+  .product-card:hover{border-color:var(--accent-border);background:var(--accent-light);}
+  .product-card.selected{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 3px rgba(26,63,143,.08);}
+  .product-icon{font-size:22px;margin-bottom:6px;}
+  .product-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;}
+  .product-price{font-size:11px;color:var(--muted);}
+  .product-cat{font-size:10px;color:var(--hint);margin-top:2px;}
+
+  /* ── Order summary ── */
+  .summary-box{background:var(--accent-light);border:1px solid var(--accent-border);border-radius:var(--radius-sm);padding:16px;margin:16px 24px 0;}
+  .summary-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:var(--muted);}
+  .summary-row:last-child{margin-bottom:0;font-size:15px;font-weight:700;color:var(--accent);border-top:1px solid var(--accent-border);padding-top:8px;margin-top:8px;}
+  .summary-row span:last-child{color:var(--text);font-weight:500;}
+  .summary-row:last-child span:last-child{color:var(--accent);}
+
+  /* ── Submit ── */
+  .form-footer{padding:20px 24px 24px;}
+  .btn-submit{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;letter-spacing:.01em;}
+  .btn-submit:hover{opacity:.9;}
+  .btn-submit:active{transform:scale(.99);}
+  .btn-submit:disabled{opacity:.6;cursor:not-allowed;}
+  .btn-submit .spinner{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto;}
+  .btn-submit.loading .btn-text{display:none;}
+  .btn-submit.loading .spinner{display:block;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ── Success / Error states ── */
+  .alert{border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;margin:0 24px 16px;display:none;line-height:1.6;}
+  .alert.show{display:block;}
+  .alert-success{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success-text);}
+  .alert-error{background:var(--error-bg);border:1px solid var(--error-border);color:var(--error-text);}
+
+  /* ── Success screen ── */
+  #success-screen{display:none;max-width:640px;margin:40px auto;padding:0 16px;}
+  .success-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:40px 24px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.08);}
+  .success-icon{font-size:52px;margin-bottom:16px;}
+  .success-title{font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px;}
+  .success-sub{font-size:14px;color:var(--muted);line-height:1.6;max-width:360px;margin:0 auto 24px;}
+  .success-ref{background:var(--accent-light);border:1px solid var(--accent-border);border-radius:var(--radius-sm);padding:12px 20px;display:inline-block;font-size:13px;color:var(--accent);font-weight:600;margin-bottom:24px;}
+  .btn-new{padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:500;cursor:pointer;}
+
+  /* ── Footer ── */
+  .page-footer{text-align:center;padding:16px;font-size:11px;color:var(--hint);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Jawtech</div>
+  <div class="header-sub">Order Management</div>
+</div>
+
+<div class="hero">
+  <div class="hero-title">Place Your Order</div>
+  <div class="hero-sub">Fill in your details below and we will get started on your order immediately.</div>
+</div>
+
+<!-- ORDER FORM -->
+<div class="form-wrap" id="form-wrap">
+  <div class="form-card">
+
+    <!-- Customer Details -->
+    <div class="form-section">
+      <div class="section-title">Customer Details</div>
+      <div class="form-grid two">
+        <div class="field">
+          <label>First Name</label>
+          <input type="text" id="first_name" placeholder="e.g. Bolu" />
+          <span class="err-msg">First name is required</span>
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+          <input type="text" id="last_name" placeholder="e.g. Adeyemi" />
+          <span class="err-msg">Last name is required</span>
+        </div>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" id="customer_email" placeholder="e.g. bolu@example.com" />
+          <span class="err-msg">Valid email is required</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Selection -->
+    <div class="form-section" style="margin-top:20px;">
+      <div class="section-title">Select a Service</div>
+      <div class="product-grid" id="product-grid">
+        <!-- Injected by JS -->
+      </div>
+      <input type="hidden" id="product_id" />
+      <input type="hidden" id="product_name" />
+      <input type="hidden" id="category" />
+      <input type="hidden" id="unit_price" />
+      <div class="field" style="margin-top:4px;">
+        <span class="err-msg" id="product-err" style="display:none;">Please select a service</span>
+      </div>
+    </div>
+
+    <!-- Quantity -->
+    <div class="form-section" style="margin-top:20px;">
+      <div class="section-title">Quantity & Notes</div>
+      <div class="form-grid two">
+        <div class="field">
+          <label>Quantity</label>
+          <input type="number" id="quantity" value="1" min="1" max="100" />
+          <span class="err-msg">Quantity must be at least 1</span>
+        </div>
+        <div class="field">
+          <label>Unit Price (₦)</label>
+          <input type="text" id="unit_price_display" placeholder="Auto-filled" readonly style="background:var(--bg);cursor:default;" />
+        </div>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="field">
+          <label>Additional Notes (optional)</label>
+          <textarea id="notes" rows="3" placeholder="Any specific requirements or instructions..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="summary-box" id="summary-box" style="display:none;">
+      <div class="summary-row"><span>Service</span><span id="sum-product">—</span></div>
+      <div class="summary-row"><span>Category</span><span id="sum-category">—</span></div>
+      <div class="summary-row"><span>Quantity</span><span id="sum-qty">—</span></div>
+      <div class="summary-row"><span>Unit Price</span><span id="sum-unit">—</span></div>
+      <div class="summary-row"><span>Total</span><span id="sum-total">₦0</span></div>
+    </div>
+
+    <!-- Alerts -->
+    <div class="alert alert-error" id="alert-error"></div>
+
+    <!-- Submit -->
+    <div class="form-footer">
+      <button class="btn-submit" id="btn-submit" onclick="submitOrder()">
+        <span class="btn-text">Submit Order</span>
+        <div class="spinner"></div>
+      </button>
+      <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--hint);">Your order will be confirmed via email</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUCCESS SCREEN -->
+<div id="success-screen">
+  <div class="success-card">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Order Received!</div>
+    <div class="success-sub">Thank you! Your order has been submitted successfully. Our team will review it and get in touch with you shortly.</div>
+    <div class="success-ref" id="success-ref">Order #—</div>
+    <br>
+    <button class="btn-new" onclick="resetForm()">Place Another Order</button>
+  </div>
+</div>
+
+<div class="page-footer">© 2025 Jawtech. All rights reserved.</div>
+
+<script>
+// ── CONFIG — paste your n8n pending webhook URL and Google Sheets Apps Script URL here ──
+const N8N_WEBHOOK  = 'YOUR_N8N_PENDING_WEBHOOK_URL';
+const SHEETS_URL   = 'YOUR_GOOGLE_APPS_SCRIPT_URL';  // we will set this up next
+
+// ── Products ──
+const PRODUCTS = [
+  {id:'P001', name:'Web Design Package',  category:'Digital Services', price:84000,  icon:'💻'},
+  {id:'P002', name:'SEO Audit',           category:'Marketing',        price:50000,  icon:'📈'},
+  {id:'P003', name:'Logo Design',         category:'Branding',         price:18333,  icon:'🎨'},
+  {id:'P004', name:'Social Media Kit',    category:'Marketing',        price:120000, icon:'📱'},
+  {id:'P005', name:'E-commerce Setup',    category:'Digital Services', price:300000, icon:'🛒'},
+  {id:'P006', name:'Flyer Design',        category:'Print',            price:3700,   icon:'🖨️'},
+  {id:'P007', name:'Brand Identity',      category:'Branding',         price:145000, icon:'✨'},
+  {id:'P008', name:'Content Writing',     category:'Marketing',        price:15000,  icon:'✍️'},
+  {id:'P009', name:'WordPress Setup',     category:'Digital Services', price:75000,  icon:'🌐'},
+  {id:'P010', name:'Photography Package', category:'Creative',         price:95000,  icon:'📷'},
+];
+
+let selectedProduct = null;
+
+// ── Render product cards ──
+function renderProducts(){
+  const grid = document.getElementById('product-grid');
+  grid.innerHTML = PRODUCTS.map(p => `
+    <div class="product-card" id="pc-${p.id}" onclick="selectProduct('${p.id}')">
+      <div class="product-icon">${p.icon}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-price">₦${p.price.toLocaleString('en-NG')}</div>
+      <div class="product-cat">${p.category}</div>
+    </div>
+  `).join('');
+}
+
+function selectProduct(id){
+  const p = PRODUCTS.find(x => x.id === id);
+  if(!p) return;
+  selectedProduct = p;
+  document.querySelectorAll('.product-card').forEach(el => el.classList.remove('selected'));
+  document.getElementById('pc-' + id).classList.add('selected');
+  document.getElementById('product_id').value    = p.id;
+  document.getElementById('product_name').value  = p.name;
+  document.getElementById('category').value      = p.category;
+  document.getElementById('unit_price').value    = p.price;
+  document.getElementById('unit_price_display').value = '₦' + p.price.toLocaleString('en-NG');
+  document.getElementById('product-err').style.display = 'none';
+  updateSummary();
+}
+
+function updateSummary(){
+  if(!selectedProduct) return;
+  const qty   = parseInt(document.getElementById('quantity').value) || 1;
+  const total = selectedProduct.price * qty;
+  document.getElementById('summary-box').style.display  = 'block';
+  document.getElementById('sum-product').textContent    = selectedProduct.name;
+  document.getElementById('sum-category').textContent   = selectedProduct.category;
+  document.getElementById('sum-qty').textContent        = qty;
+  document.getElementById('sum-unit').textContent       = '₦' + selectedProduct.price.toLocaleString('en-NG');
+  document.getElementById('sum-total').textContent      = '₦' + total.toLocaleString('en-NG');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  document.getElementById('quantity').addEventListener('input', updateSummary);
+});
+
+// ── Generate IDs ──
+function genOrderId(){ return String(Date.now()).slice(-6); }
+function today(){ return new Date().toISOString().split('T')[0]; }
+
+// ── Validate ──
+function validate(){
+  let ok = true;
+  const req = ['first_name','last_name','customer_email','quantity'];
+  req.forEach(id => {
+    const el = document.getElementById(id);
+    const empty = !el.value.trim() || (id==='quantity' && parseInt(el.value)<1);
+    const emailInvalid = id==='customer_email' && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+    el.classList.toggle('error', empty || emailInvalid);
+    if(empty || emailInvalid) ok = false;
+  });
+  if(!selectedProduct){
+    document.getElementById('product-err').style.display = 'block';
+    ok = false;
+  }
+  return ok;
+}
+
+// ── Submit ──
+async function submitOrder(){
+  if(!validate()) return;
+
+  const btn = document.getElementById('btn-submit');
+  btn.classList.add('loading');
+  btn.disabled = true;
+  document.getElementById('alert-error').classList.remove('show');
+
+  const orderId   = genOrderId();
+  const qty       = parseInt(document.getElementById('quantity').value) || 1;
+  const totalPrice = selectedProduct.price * qty;
+
+  const order = {
+    order_id:       orderId,
+    product_id:     selectedProduct.id,
+    product_name:   selectedProduct.name,
+    category:       selectedProduct.category,
+    quantity:       qty,
+    unit_price:     selectedProduct.price,
+    total_price:    totalPrice,
+    first_name:     document.getElementById('first_name').value.trim(),
+    last_name:      document.getElementById('last_name').value.trim(),
+    customer_email: document.getElementById('customer_email').value.trim(),
+    order_status:   'pending',
+    order_date:     today(),
+    notes:          document.getElementById('notes').value.trim(),
+  };
+
+  try {
+    // 1. Write to Google Sheets via Apps Script
+    if(SHEETS_URL && SHEETS_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
+      await fetch(SHEETS_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(order),
+        mode: 'no-cors'
+      });
+    }
+
+    // 2. Fire n8n pending webhook
+    if(N8N_WEBHOOK && N8N_WEBHOOK !== 'YOUR_N8N_PENDING_WEBHOOK_URL'){
+      await fetch(N8N_WEBHOOK, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({body: order}),
+        mode: 'no-cors'
+      });
+    }
+
+    // 3. Show success
+    document.getElementById('success-ref').textContent = 'Order #' + orderId;
+    document.getElementById('form-wrap').style.display  = 'none';
+    document.getElementById('success-screen').style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
+
+  } catch(e) {
+    const err = document.getElementById('alert-error');
+    err.textContent = 'Something went wrong. Please try again or contact us directly.';
+    err.classList.add('show');
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+function resetForm(){
+  document.getElementById('form-wrap').style.display   = 'block';
+  document.getElementById('success-screen').style.display = 'none';
+  document.getElementById('first_name').value  = '';
+  document.getElementById('last_name').value   = '';
+  document.getElementById('customer_email').value = '';
+  document.getElementById('quantity').value    = '1';
+  document.getElementById('notes').value       = '';
+  document.getElementById('unit_price_display').value = '';
+  document.getElementById('summary-box').style.display = 'none';
+  document.querySelectorAll('.product-card').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.field input,.field select').forEach(el => el.classList.remove('error'));
+  selectedProduct = null;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
