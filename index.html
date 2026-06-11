@@ -161,6 +161,11 @@
     <div class="modal-title">Settings</div>
 
     <div class="field">
+      <label>Google Sheet CSV URL</label>
+      <input id="s-sheet-url" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv" style="font-size:12px;" />
+    </div>
+
+    <div class="field">
       <label>Currency Symbol</label>
       <div class="currency-row">
         <span class="currency-symbol" id="currency-preview">₦</span>
@@ -190,10 +195,11 @@
 <div id="toast"></div>
 
 <script>
-// ── HARDCODED CONFIG ──
-const SHEET_URL  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4tzGBi8pr1tW2ltpQdVYSBXSH2O2iWwoieXBOkGdrol8uFuBYJsFW6eSFb4Hiy58YUyrssiAiQMxz/pub?gid=0&single=true&output=csv';
-const N8N_BASE   = 'https://impurity-rejoice-gaffe.ngrok-free.dev';
-const WEBHOOK_PATH = '/webhook/orders';
+// ── DEFAULT CONFIG ──
+const DEFAULT_SHEET = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4tzGBi8pr1tW2ltpQdVYSBXSH2O2iWwoieXBOkGdrol8uFuBYJsFW6eSFb4Hiy58YUyrssiAiQMxz/pub?gid=0&single=true&output=csv';
+const DEFAULT_N8N   = 'https://impurity-rejoice-gaffe.ngrok-free.dev';
+const WEBHOOK_PATH  = '/webhook/orders';
+let SHEET_URL = DEFAULT_SHEET;
 
 const STAGES = ['pending','processing','completed','refunded','cancelled'];
 const LABELS = {pending:'Pending',processing:'Processing',completed:'Completed',refunded:'Refunded',cancelled:'Cancelled'};
@@ -211,21 +217,22 @@ function loadSettings(){
   try{
     const s = JSON.parse(localStorage.getItem('op_settings')||'{}');
     WEBHOOKS = s.webhooks || {
-      pending:    N8N_BASE + WEBHOOK_PATH,
-      processing: N8N_BASE + WEBHOOK_PATH,
-      completed:  N8N_BASE + WEBHOOK_PATH,
-      refunded:   N8N_BASE + WEBHOOK_PATH,
-      cancelled:  N8N_BASE + WEBHOOK_PATH,
+      pending:    DEFAULT_N8N + WEBHOOK_PATH,
+      processing: DEFAULT_N8N + WEBHOOK_PATH,
+      completed:  DEFAULT_N8N + WEBHOOK_PATH,
+      refunded:   DEFAULT_N8N + WEBHOOK_PATH,
+      cancelled:  DEFAULT_N8N + WEBHOOK_PATH,
     };
-    POLL_MS  = s.poll   || 60000;
-    CURRENCY = s.currency || '₦';
+    POLL_MS   = s.poll     || 60000;
+    CURRENCY  = s.currency  || '₦';
+    SHEET_URL = s.sheetUrl  || DEFAULT_SHEET;
   }catch(_){
     WEBHOOKS = {
-      pending:    N8N_BASE + WEBHOOK_PATH,
-      processing: N8N_BASE + WEBHOOK_PATH,
-      completed:  N8N_BASE + WEBHOOK_PATH,
-      refunded:   N8N_BASE + WEBHOOK_PATH,
-      cancelled:  N8N_BASE + WEBHOOK_PATH,
+      pending:    DEFAULT_N8N + WEBHOOK_PATH,
+      processing: DEFAULT_N8N + WEBHOOK_PATH,
+      completed:  DEFAULT_N8N + WEBHOOK_PATH,
+      refunded:   DEFAULT_N8N + WEBHOOK_PATH,
+      cancelled:  DEFAULT_N8N + WEBHOOK_PATH,
     };
   }
 }
@@ -233,7 +240,7 @@ function loadSettings(){
 function saveToStorage(){
   try{
     localStorage.setItem('op_settings', JSON.stringify({
-      webhooks: WEBHOOKS, poll: POLL_MS, currency: CURRENCY
+      webhooks: WEBHOOKS, poll: POLL_MS, currency: CURRENCY, sheetUrl: SHEET_URL
     }));
   }catch(_){}
 }
@@ -487,16 +494,18 @@ function openSettings(){
   document.getElementById('s-poll').value=POLL_MS/1000;
   document.getElementById('s-currency').value=CURRENCY;
   document.getElementById('currency-preview').textContent=CURRENCY;
+  document.getElementById('s-sheet-url').value=SHEET_URL;
   document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettings(){document.getElementById('settings-modal').classList.remove('open');}
 function handleModalBg(e){if(e.target===document.getElementById('settings-modal'))closeSettings();}
 function saveSettings(){
   ['pending','processing','completed','refunded','cancelled'].forEach(k=>{
-    WEBHOOKS[k]=document.getElementById('s-wh-'+k).value||N8N_BASE+WEBHOOK_PATH;
+    WEBHOOKS[k]=document.getElementById('s-wh-'+k).value||DEFAULT_N8N+WEBHOOK_PATH;
   });
   POLL_MS=(parseInt(document.getElementById('s-poll').value)||60)*1000;
   CURRENCY=document.getElementById('s-currency').value||'₦';
+  SHEET_URL=document.getElementById('s-sheet-url').value||DEFAULT_SHEET;
   saveToStorage();
   clearInterval(pollTimer);
   pollTimer=setInterval(syncAndAutoMove, POLL_MS);
