@@ -18,7 +18,6 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
 
-  /* Topbar */
   .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
   .topbar-left{display:flex;align-items:center;gap:10px;}
   .logo{font-size:15px;font-weight:700;letter-spacing:-.3px;}
@@ -31,7 +30,6 @@
   .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--completed-border);animation:pulse 2s infinite;flex-shrink:0;}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-  /* Stats */
   .stats-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
   @media(max-width:700px){.stats-bar{grid-template-columns:repeat(3,1fr);}}
   .stat{background:var(--surface);padding:10px 14px;}
@@ -39,7 +37,6 @@
   .stat-value{font-size:17px;font-weight:600;letter-spacing:-.5px;}
   .stat-value.green{color:#0d5c35;}.stat-value.blue{color:var(--accent);}
 
-  /* Pipeline */
   .pipeline-wrap{padding:16px 20px;overflow-x:auto;}
   .pipeline{display:grid;grid-template-columns:repeat(5,minmax(220px,1fr));gap:12px;align-items:start;min-width:1100px;}
   .col{border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);overflow:hidden;}
@@ -54,7 +51,6 @@
   .col-count{font-size:12px;color:var(--muted);font-weight:500;}
   .cards-area{padding:10px;min-height:150px;}
 
-  /* Cards */
   .card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;margin-bottom:8px;cursor:grab;user-select:none;transition:border-color .12s,transform .15s;}
   .card:hover{border-color:#c0bfbb;transform:translateY(-1px);}
   .card:active{cursor:grabbing;opacity:.7;}
@@ -79,7 +75,6 @@
   .btn-action.danger:hover{background:var(--cancelled-bg);}
   .empty{text-align:center;padding:28px 0;color:var(--hint);font-size:12px;}
 
-  /* Log */
   .log-panel{margin:0 20px 24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);}
   .log-head{padding:10px 14px;border-bottom:1px solid var(--border-light);font-size:12px;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:space-between;}
   .log-body{padding:8px 0;max-height:140px;overflow-y:auto;}
@@ -91,28 +86,28 @@
   .log-err{color:var(--cancelled-text);font-size:11px;font-weight:500;}
   .log-pend{color:var(--pending-text);font-size:11px;font-weight:500;}
 
-  /* Toast */
   #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1a19;color:#fff;padding:8px 18px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:999;max-width:90vw;text-align:center;}
   #toast.show{opacity:1;}
 
-  /* Modal */
   .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;align-items:flex-end;justify-content:center;}
   @media(min-width:600px){.modal-bg{align-items:center;}}
   .modal-bg.open{display:flex;}
   .modal{background:var(--surface);border-radius:var(--radius) var(--radius) 0 0;padding:24px;width:100%;max-height:90vh;overflow-y:auto;}
-  @media(min-width:600px){.modal{border-radius:var(--radius);width:480px;max-height:none;}}
+  @media(min-width:600px){.modal{border-radius:var(--radius);width:500px;max-height:none;}}
   .modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;display:block;}
   @media(min-width:600px){.modal-handle{display:none;}}
   .modal-title{font-size:16px;font-weight:600;margin-bottom:16px;}
   .field{margin-bottom:12px;}
   .field label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em;}
-  .field input,.field select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:var(--surface);color:var(--text);outline:none;}
-  .field input:focus,.field select:focus{border-color:var(--accent);}
+  .field input,.field select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--surface);color:var(--text);outline:none;}
+  .field input:focus{border-color:var(--accent);}
   .wh-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   @media(max-width:500px){.wh-grid{grid-template-columns:1fr;}}
   .modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;}
-  .currency-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+  .currency-row{display:flex;align-items:center;gap:8px;}
   .currency-symbol{font-size:18px;font-weight:700;color:var(--accent);min-width:28px;}
+  .divider{border:none;border-top:1px solid var(--border-light);margin:14px 0;}
+  .settings-section{font-size:11px;font-weight:600;color:var(--hint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;}
 </style>
 </head>
 <body>
@@ -160,23 +155,29 @@
     <span class="modal-handle"></span>
     <div class="modal-title">Settings</div>
 
+    <div class="settings-section">Data source</div>
     <div class="field">
       <label>Google Sheet CSV URL</label>
-      <input id="s-sheet-url" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv" style="font-size:12px;" />
+      <input id="s-sheet-url" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv" />
+    </div>
+    <div class="field">
+      <label>Poll interval (seconds)</label>
+      <input id="s-poll" type="number" min="10" value="15" />
     </div>
 
+    <hr class="divider">
+    <div class="settings-section">Display</div>
     <div class="field">
-      <label>Currency Symbol</label>
+      <label>Currency symbol</label>
       <div class="currency-row">
         <span class="currency-symbol" id="currency-preview">₦</span>
-        <input id="s-currency" value="₦" maxlength="3" style="width:80px;" oninput="document.getElementById('currency-preview').textContent=this.value||'₦'" />
+        <input id="s-currency" value="₦" maxlength="5" style="width:80px;" oninput="document.getElementById('currency-preview').textContent=this.value||'₦'" />
         <span style="font-size:12px;color:var(--muted);">e.g. ₦ $ £ € GH₵</span>
       </div>
     </div>
 
-    <div class="field"><label>Poll interval (seconds)</label><input id="s-poll" type="number" min="10" value="60"></div>
-
-    <div style="font-size:11px;font-weight:600;color:var(--hint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;margin-top:4px;">Webhook URLs</div>
+    <hr class="divider">
+    <div class="settings-section">n8n webhook URLs</div>
     <div class="wh-grid">
       <div class="field"><label>On Pending</label><input id="s-wh-pending"></div>
       <div class="field"><label>On Processing</label><input id="s-wh-processing"></div>
@@ -199,7 +200,6 @@
 const DEFAULT_SHEET = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4tzGBi8pr1tW2ltpQdVYSBXSH2O2iWwoieXBOkGdrol8uFuBYJsFW6eSFb4Hiy58YUyrssiAiQMxz/pub?gid=0&single=true&output=csv';
 const DEFAULT_N8N   = 'https://impurity-rejoice-gaffe.ngrok-free.dev';
 const WEBHOOK_PATH  = '/webhook/orders';
-let SHEET_URL = DEFAULT_SHEET;
 
 const STAGES = ['pending','processing','completed','refunded','cancelled'];
 const LABELS = {pending:'Pending',processing:'Processing',completed:'Completed',refunded:'Refunded',cancelled:'Cancelled'};
@@ -207,40 +207,35 @@ const NEXT   = {pending:'processing',processing:'completed'};
 
 let ORDERS    = [];
 let WEBHOOKS  = {};
-let POLL_MS   = 60000;
+let POLL_MS   = 15000;
 let CURRENCY  = '₦';
+let SHEET_URL = DEFAULT_SHEET;
 let pollTimer = null;
 let dragId    = null;
 
-// ── Load settings from localStorage ──
+// Tracks manually moved orders — prevents poller from reverting them
+const manuallyMoved = {};
+
+// ── Storage ──
 function loadSettings(){
   try{
     const s = JSON.parse(localStorage.getItem('op_settings')||'{}');
-    WEBHOOKS = s.webhooks || {
-      pending:    DEFAULT_N8N + WEBHOOK_PATH,
-      processing: DEFAULT_N8N + WEBHOOK_PATH,
-      completed:  DEFAULT_N8N + WEBHOOK_PATH,
-      refunded:   DEFAULT_N8N + WEBHOOK_PATH,
-      cancelled:  DEFAULT_N8N + WEBHOOK_PATH,
-    };
-    POLL_MS   = s.poll     || 60000;
-    CURRENCY  = s.currency  || '₦';
     SHEET_URL = s.sheetUrl  || DEFAULT_SHEET;
+    POLL_MS   = s.poll      || 15000;
+    CURRENCY  = s.currency  || '₦';
+    WEBHOOKS  = s.webhooks  || defaultWebhooks();
   }catch(_){
-    WEBHOOKS = {
-      pending:    DEFAULT_N8N + WEBHOOK_PATH,
-      processing: DEFAULT_N8N + WEBHOOK_PATH,
-      completed:  DEFAULT_N8N + WEBHOOK_PATH,
-      refunded:   DEFAULT_N8N + WEBHOOK_PATH,
-      cancelled:  DEFAULT_N8N + WEBHOOK_PATH,
-    };
+    WEBHOOKS = defaultWebhooks();
   }
 }
-
+function defaultWebhooks(){
+  const base = DEFAULT_N8N + WEBHOOK_PATH;
+  return {pending:base,processing:base,completed:base,refunded:base,cancelled:base};
+}
 function saveToStorage(){
   try{
     localStorage.setItem('op_settings', JSON.stringify({
-      webhooks: WEBHOOKS, poll: POLL_MS, currency: CURRENCY, sheetUrl: SHEET_URL
+      sheetUrl:SHEET_URL, poll:POLL_MS, currency:CURRENCY, webhooks:WEBHOOKS
     }));
   }catch(_){}
 }
@@ -259,7 +254,7 @@ function logEntry(msg,status='ok'){
   const time=[now.getHours(),now.getMinutes(),now.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':');
   if(body.children.length===1&&body.children[0].textContent.includes('Waiting'))body.innerHTML='';
   const cls={ok:'log-ok',err:'log-err',pending:'log-pend'}[status]||'log-ok';
-  const label={ok:'OK',err:'Failed',pending:'Sent'}[status];
+  const label={ok:'OK',err:'Failed',pending:'Sent'}[status]||status;
   const row=document.createElement('div'); row.className='log-row';
   row.innerHTML=`<span class="log-time">${time}</span><span class="log-msg">${msg}</span><span class="${cls}">${label}</span>`;
   body.prepend(row);
@@ -273,23 +268,23 @@ function clearLog(){
 async function fireWebhook(order, newStatus){
   const url = WEBHOOKS[newStatus];
   const payload = {
-    order_id:       order.id,
-    order_number:   order.number,
-    first_name:     order.firstName,
-    last_name:      order.lastName,
-    customer_email: order.email,
-    product_id:     order.productId,
-    product_name:   order.productName,
-    category:       order.category,
-    quantity:       order.quantity,
-    unit_price:     order.unitPrice,
-    total_price:    order.totalPrice,
-    order_status:   newStatus,
-    previous_status:order.status,
-    order_date:     order.orderDate,
-    next_stage:     NEXT[newStatus]||null,
-    timestamp:      new Date().toISOString(),
-    source:         'dashboard'
+    order_id:        order.id,
+    order_number:    order.number,
+    first_name:      order.firstName,
+    last_name:       order.lastName,
+    customer_email:  order.email,
+    product_id:      order.productId,
+    product_name:    order.productName,
+    category:        order.category,
+    quantity:        order.quantity,
+    unit_price:      order.unitPrice,
+    total_price:     order.totalPrice,
+    order_status:    newStatus,
+    previous_status: order.status,
+    order_date:      order.orderDate,
+    next_stage:      NEXT[newStatus]||null,
+    timestamp:       new Date().toISOString(),
+    source:          'dashboard'
   };
   logEntry(`Webhook fired for ${order.number} to ${LABELS[newStatus]}`,'pending');
   if(!url){ logEntry(`No webhook URL for "${newStatus}" — skipped`,'err'); return false; }
@@ -310,21 +305,29 @@ async function fireWebhook(order, newStatus){
   }
 }
 
-// ── Move order ──
+// ── Move order (manual action) ──
 async function moveOrder(id, newStatus){
   const order=ORDERS.find(o=>o.id===id);
   if(!order||order.status===newStatus)return;
-  manuallyMoved[id] = Date.now();
   const prev=order.status;
-  order.status=newStatus; order.updatedAt='just now';
-  render(); toast(`${order.number} moved to ${LABELS[newStatus]}`);
+  order.status=newStatus;
+  order.updatedAt='just now';
+
+  // Lock this order for 120 seconds so poller does not revert it
+  manuallyMoved[id] = Date.now();
+  manuallyMoved[id+'_status'] = newStatus;
+
+  render();
+  toast(`${order.number} moved to ${LABELS[newStatus]}`);
   highlightCard(id);
+
   const shouldAdvance=await fireWebhook({...order,status:prev},newStatus);
   if(shouldAdvance&&NEXT[newStatus]){
     logEntry(`Auto advancing ${order.number} to ${LABELS[NEXT[newStatus]]}`,'pending');
     setTimeout(()=>moveOrder(id,NEXT[newStatus]),900);
   }
 }
+
 function highlightCard(id){
   const el=document.querySelector(`[data-id="${id}"]`);
   if(el){el.classList.add('auto-moved');setTimeout(()=>el.classList.remove('auto-moved'),900);}
@@ -336,7 +339,7 @@ function parseCSV(text){
   if(lines.length<2)return[];
   const headers=lines[0].split(',').map(h=>h.replace(/^"|"$/g,'').trim().toLowerCase().replace(/\s+/g,'_'));
   const col=k=>headers.indexOf(k);
-  return lines.slice(1).map((line,i)=>{
+  return lines.slice(1).map(line=>{
     const cols=[];let cur='',inQ=false;
     for(const c of line){
       if(c==='"'){inQ=!inQ;}
@@ -344,51 +347,46 @@ function parseCSV(text){
       else{cur+=c;}
     }
     cols.push(cur.replace(/^"|"$/g,'').trim());
-    const g=k=>cols[col(k)]||'';
-
-    // Skip completely empty rows
-    const orderId = g('order_id');
-    if(!orderId) return null;
-
-    const rawStatus=(g('order_status')||'pending').toLowerCase().trim();
+    const g=k=>(cols[col(k)]||'').trim();
+    const orderId=g('order_id');
+    if(!orderId)return null;
+    const rawStatus=(g('order_status')||'pending').toLowerCase();
     const totalRaw=g('total_price')||'0';
     const totalNum=parseFloat(String(totalRaw).replace(/[^\d.]/g,'')||'0');
-
     return{
-      id:        orderId,
-      number:    '#'+orderId,
-      firstName: g('first_name'),
-      lastName:  g('last_name'),
-      name:      (g('first_name')+' '+g('last_name')).trim()||'Unknown',
-      email:     g('customer_email'),
-      productId: g('product_id'),
+      id:          orderId,
+      number:      '#'+orderId,
+      firstName:   g('first_name'),
+      lastName:    g('last_name'),
+      name:        (g('first_name')+' '+g('last_name')).trim()||'Unknown',
+      email:       g('customer_email'),
+      productId:   g('product_id'),
       productName: g('product_name'),
-      category:  g('category'),
-      quantity:  g('quantity'),
-      unitPrice: g('unit_price'),
-      totalPrice:totalRaw,
-      totalNum:  totalNum,
-      amount:    CURRENCY + totalNum.toLocaleString('en-NG'),
-      status:    mapStatus(rawStatus),
-      orderDate: g('order_date'),
-      updatedAt: g('order_date')||'from sheet',
-      source:    'Google Sheets'
+      category:    g('category'),
+      quantity:    g('quantity'),
+      unitPrice:   g('unit_price'),
+      totalPrice:  totalRaw,
+      totalNum:    totalNum,
+      amount:      CURRENCY+totalNum.toLocaleString('en-NG'),
+      status:      mapStatus(rawStatus),
+      orderDate:   g('order_date'),
+      updatedAt:   g('order_date')||'from sheet',
+      source:      'Google Sheets'
     };
   }).filter(Boolean);
 }
 
 function mapStatus(s){
-  const map={
+  return{
     pending:'pending','on-hold':'pending',new:'pending',
     processing:'processing','in progress':'processing',active:'processing',
     completed:'completed',done:'completed',delivered:'completed',paid:'completed',
     refunded:'refunded',refund:'refunded',
     cancelled:'cancelled',canceled:'cancelled',rejected:'cancelled'
-  };
-  return map[s]||'pending';
+  }[s]||'pending';
 }
 
-// ── Fetch orders ──
+// ── Full sync (Sync button) — always reloads everything clean ──
 async function fetchOrders(){
   setSyncStatus('syncing');
   try{
@@ -397,7 +395,7 @@ async function fetchOrders(){
     ORDERS=parseCSV(text);
     render();
     setSyncStatus('live');
-    logEntry(`Synced ${ORDERS.length} orders from sheet`,'ok');
+    logEntry(`Synced ${ORDERS.length} order(s) from sheet`,'ok');
   }catch(e){
     setSyncStatus('error');
     logEntry('Sync failed: '+e.message,'err');
@@ -405,36 +403,51 @@ async function fetchOrders(){
   }
 }
 
-// ── Auto sync ──
-const manuallyMoved = {};
-
+// ── Auto sync (poller) — respects manual moves ──
 async function syncAndAutoMove(){
   try{
-    const res = await fetch(SHEET_URL + '&cb=' + Date.now());
-    const text = await res.text();
-    const fresh = parseCSV(text);
-    let moved = 0;
-    fresh.forEach(n => {
-      const ex = ORDERS.find(o => o.id === n.id);
+    const res=await fetch(SHEET_URL+'&cb='+Date.now());
+    const text=await res.text();
+    const fresh=parseCSV(text);
+    const LOCK_MS = 120000; // 2 minutes lock after manual move
 
-      // Skip if manually moved in last 90 seconds
-      if(manuallyMoved[n.id] && Date.now() - manuallyMoved[n.id] < 90000) return;
+    fresh.forEach(n=>{
+      const ex=ORDERS.find(o=>o.id===n.id);
+
+      // If manually moved recently, keep the dashboard status — ignore sheet
+      if(manuallyMoved[n.id] && Date.now()-manuallyMoved[n.id] < LOCK_MS){
+        if(ex) ex.status = manuallyMoved[n.id+'_status'] || ex.status;
+        return;
+      }
+
+      // Clear expired lock
+      if(manuallyMoved[n.id] && Date.now()-manuallyMoved[n.id] >= LOCK_MS){
+        delete manuallyMoved[n.id];
+        delete manuallyMoved[n.id+'_status'];
+      }
 
       if(ex && ex.status !== n.status){
-        logEntry(`Sheet update: ${n.number} ${LABELS[ex.status]} to ${LABELS[n.status]}`, 'pending');
-        moveOrder(n.id, n.status);
-        moved++;
-      } else if(!ex){ ORDERS.push(n); }
+        // Sheet changed this order (e.g. you edited it directly in the sheet)
+        logEntry(`Sheet update: ${n.number} ${LABELS[ex.status]} to ${LABELS[n.status]}`,'pending');
+        ex.status = n.status;
+      } else if(!ex){
+        // New order appeared in sheet
+        ORDERS.push(n);
+        logEntry(`New order ${n.number} from sheet`,'ok');
+      }
     });
-    if(moved === 0) render();
-  }catch(e){ logEntry('Auto sync error: ' + e.message, 'err'); }
+
+    render();
+  }catch(e){
+    logEntry('Auto sync error: '+e.message,'err');
+  }
 }
 
 function setSyncStatus(state){
   const colors={live:'var(--completed-border)',syncing:'#f0c84a',error:'#f25555'};
   const labels={live:'Live',syncing:'Syncing',error:'Error'};
-  document.querySelector('.sync-dot').style.background=colors[state]||colors.live;
-  document.getElementById('sync-label').textContent=labels[state]||'Live';
+  document.querySelector('.sync-dot').style.background=colors[state];
+  document.getElementById('sync-label').textContent=labels[state];
 }
 
 // ── Render ──
@@ -447,7 +460,10 @@ function render(){
     if(!col)return;
     col.addEventListener('dragover',e=>{e.preventDefault();col.classList.add('drag-over');});
     col.addEventListener('dragleave',()=>col.classList.remove('drag-over'));
-    col.addEventListener('drop',e=>{e.preventDefault();col.classList.remove('drag-over');if(dragId)moveOrder(dragId,s);dragId=null;});
+    col.addEventListener('drop',e=>{
+      e.preventDefault();col.classList.remove('drag-over');
+      if(dragId)moveOrder(dragId,s);dragId=null;
+    });
   });
 
   document.querySelectorAll('.card').forEach(el=>{
@@ -471,7 +487,10 @@ function colHTML(status){
   const cards=orders.length
     ?orders.map(o=>`
       <div class="card" draggable="true" data-id="${o.id}">
-        <div class="card-header"><span class="card-id">${o.number}</span><span class="card-source">${o.source}</span></div>
+        <div class="card-header">
+          <span class="card-id">${o.number}</span>
+          <span class="card-source">${o.source}</span>
+        </div>
         <div class="card-name">${o.name}</div>
         <div class="card-email">${o.email||''}</div>
         <div class="card-product">${o.productName||''}</div>
@@ -481,7 +500,7 @@ function colHTML(status){
           ${o.orderDate?`<span>${o.orderDate}</span>`:''}
         </div>
         <div class="card-footer">
-          <span class="card-amount">${CURRENCY}${parseFloat(String(o.totalPrice).replace(/[^\d.]/g,'')||0).toLocaleString('en-NG')}</span>
+          <span class="card-amount">${CURRENCY}${(o.totalNum||0).toLocaleString('en-NG')}</span>
           <span class="card-time">${o.updatedAt}</span>
         </div>
         <div class="card-actions">
@@ -491,35 +510,42 @@ function colHTML(status){
         </div>
       </div>`).join('')
     :`<div class="empty">No ${LABELS[status].toLowerCase()} orders</div>`;
-  return`<div class="col" id="col-${status}"><div class="col-head"><span class="status-pill pill-${status}">${LABELS[status]}</span><span class="col-count">${orders.length}</span></div><div class="cards-area">${cards}</div></div>`;
+  return`
+    <div class="col" id="col-${status}">
+      <div class="col-head">
+        <span class="status-pill pill-${status}">${LABELS[status]}</span>
+        <span class="col-count">${orders.length}</span>
+      </div>
+      <div class="cards-area">${cards}</div>
+    </div>`;
 }
 
 // ── Settings modal ──
 function openSettings(){
-  ['pending','processing','completed','refunded','cancelled'].forEach(k=>{
-    document.getElementById('s-wh-'+k).value=WEBHOOKS[k]||'';
-  });
+  document.getElementById('s-sheet-url').value=SHEET_URL;
   document.getElementById('s-poll').value=POLL_MS/1000;
   document.getElementById('s-currency').value=CURRENCY;
   document.getElementById('currency-preview').textContent=CURRENCY;
-  document.getElementById('s-sheet-url').value=SHEET_URL;
+  ['pending','processing','completed','refunded','cancelled'].forEach(k=>{
+    document.getElementById('s-wh-'+k).value=WEBHOOKS[k]||'';
+  });
   document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettings(){document.getElementById('settings-modal').classList.remove('open');}
 function handleModalBg(e){if(e.target===document.getElementById('settings-modal'))closeSettings();}
 function saveSettings(){
+  SHEET_URL = document.getElementById('s-sheet-url').value || DEFAULT_SHEET;
+  POLL_MS   = (parseInt(document.getElementById('s-poll').value)||15)*1000;
+  CURRENCY  = document.getElementById('s-currency').value || '₦';
   ['pending','processing','completed','refunded','cancelled'].forEach(k=>{
-    WEBHOOKS[k]=document.getElementById('s-wh-'+k).value||DEFAULT_N8N+WEBHOOK_PATH;
+    WEBHOOKS[k] = document.getElementById('s-wh-'+k).value || DEFAULT_N8N+WEBHOOK_PATH;
   });
-  POLL_MS=(parseInt(document.getElementById('s-poll').value)||60)*1000;
-  CURRENCY=document.getElementById('s-currency').value||'₦';
-  SHEET_URL=document.getElementById('s-sheet-url').value||DEFAULT_SHEET;
   saveToStorage();
   clearInterval(pollTimer);
   pollTimer=setInterval(syncAndAutoMove, POLL_MS);
   closeSettings();
   toast('Settings saved');
-  render();
+  fetchOrders();
 }
 
 // ── Init ──
