@@ -314,6 +314,7 @@ async function fireWebhook(order, newStatus){
 async function moveOrder(id, newStatus){
   const order=ORDERS.find(o=>o.id===id);
   if(!order||order.status===newStatus)return;
+  manuallyMoved[id] = Date.now();
   const prev=order.status;
   order.status=newStatus; order.updatedAt='just now';
   render(); toast(`${order.number} moved to ${LABELS[newStatus]}`);
@@ -405,21 +406,28 @@ async function fetchOrders(){
 }
 
 // ── Auto sync ──
+const manuallyMoved = {};
+
 async function syncAndAutoMove(){
   try{
-    const res=await fetch(SHEET_URL+'&cb='+Date.now());
-    const text=await res.text();
-    const fresh=parseCSV(text);
-    let moved=0;
-    fresh.forEach(n=>{
-      const ex=ORDERS.find(o=>o.id===n.id);
-      if(ex&&ex.status!==n.status){
-        logEntry(`Sheet update: ${n.number} ${LABELS[ex.status]} to ${LABELS[n.status]}`,'pending');
-        moveOrder(n.id,n.status); moved++;
+    const res = await fetch(SHEET_URL + '&cb=' + Date.now());
+    const text = await res.text();
+    const fresh = parseCSV(text);
+    let moved = 0;
+    fresh.forEach(n => {
+      const ex = ORDERS.find(o => o.id === n.id);
+
+      // Skip if manually moved in last 90 seconds
+      if(manuallyMoved[n.id] && Date.now() - manuallyMoved[n.id] < 90000) return;
+
+      if(ex && ex.status !== n.status){
+        logEntry(`Sheet update: ${n.number} ${LABELS[ex.status]} to ${LABELS[n.status]}`, 'pending');
+        moveOrder(n.id, n.status);
+        moved++;
       } else if(!ex){ ORDERS.push(n); }
     });
-    if(moved===0) render();
-  }catch(e){ logEntry('Auto sync error: '+e.message,'err'); }
+    if(moved === 0) render();
+  }catch(e){ logEntry('Auto sync error: ' + e.message, 'err'); }
 }
 
 function setSyncStatus(state){
