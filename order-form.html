@@ -16,18 +16,15 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
 
-  /* ── Header ── */
   .header{background:var(--accent);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;}
   .header-logo{font-size:18px;font-weight:700;color:#fff;letter-spacing:-.3px;}
   .header-sub{font-size:12px;color:#a8c0ff;}
 
-  /* ── Hero ── */
   .hero{background:linear-gradient(135deg,#1a3f8f 0%,#2d5fd4 100%);padding:40px 24px 48px;text-align:center;}
   .hero-title{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.5px;margin-bottom:8px;}
   .hero-sub{font-size:14px;color:#a8c0ff;line-height:1.6;max-width:420px;margin:0 auto;}
   @media(min-width:600px){.hero-title{font-size:32px;}}
 
-  /* ── Form card ── */
   .form-wrap{max-width:640px;margin:-24px auto 40px;padding:0 16px;}
   .form-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);}
   .form-section{padding:24px 24px 0;}
@@ -42,9 +39,7 @@
   .field input.error,.field select.error{border-color:#f25555;}
   .field .err-msg{font-size:11px;color:#f25555;display:none;}
   .field input.error ~ .err-msg,.field select.error ~ .err-msg{display:block;}
-  .hint{font-size:11px;color:var(--hint);}
 
-  /* ── Product card selector ── */
   .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
   @media(min-width:500px){.product-grid{grid-template-columns:repeat(3,1fr);}}
   .product-card{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 10px;cursor:pointer;transition:all .15s;text-align:center;background:var(--surface);}
@@ -55,14 +50,12 @@
   .product-price{font-size:11px;color:var(--muted);}
   .product-cat{font-size:10px;color:var(--hint);margin-top:2px;}
 
-  /* ── Order summary ── */
   .summary-box{background:var(--accent-light);border:1px solid var(--accent-border);border-radius:var(--radius-sm);padding:16px;margin:16px 24px 0;}
   .summary-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:var(--muted);}
   .summary-row:last-child{margin-bottom:0;font-size:15px;font-weight:700;color:var(--accent);border-top:1px solid var(--accent-border);padding-top:8px;margin-top:8px;}
   .summary-row span:last-child{color:var(--text);font-weight:500;}
   .summary-row:last-child span:last-child{color:var(--accent);}
 
-  /* ── Submit ── */
   .form-footer{padding:20px 24px 24px;}
   .btn-submit{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;letter-spacing:.01em;}
   .btn-submit:hover{opacity:.9;}
@@ -73,13 +66,10 @@
   .btn-submit.loading .spinner{display:block;}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* ── Success / Error states ── */
   .alert{border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;margin:0 24px 16px;display:none;line-height:1.6;}
   .alert.show{display:block;}
-  .alert-success{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success-text);}
   .alert-error{background:var(--error-bg);border:1px solid var(--error-border);color:var(--error-text);}
 
-  /* ── Success screen ── */
   #success-screen{display:none;max-width:640px;margin:40px auto;padding:0 16px;}
   .success-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:40px 24px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.08);}
   .success-icon{font-size:52px;margin-bottom:16px;}
@@ -88,7 +78,6 @@
   .success-ref{background:var(--accent-light);border:1px solid var(--accent-border);border-radius:var(--radius-sm);padding:12px 20px;display:inline-block;font-size:13px;color:var(--accent);font-weight:600;margin-bottom:24px;}
   .btn-new{padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:500;cursor:pointer;}
 
-  /* ── Footer ── */
   .page-footer{text-align:center;padding:16px;font-size:11px;color:var(--hint);}
 </style>
 </head>
@@ -104,11 +93,9 @@
   <div class="hero-sub">Fill in your details below and we will get started on your order immediately.</div>
 </div>
 
-<!-- ORDER FORM -->
 <div class="form-wrap" id="form-wrap">
   <div class="form-card">
 
-    <!-- Customer Details -->
     <div class="form-section">
       <div class="section-title">Customer Details</div>
       <div class="form-grid two">
@@ -132,22 +119,16 @@
       </div>
     </div>
 
-    <!-- Product Selection -->
     <div class="form-section" style="margin-top:20px;">
       <div class="section-title">Select a Service</div>
-      <div class="product-grid" id="product-grid">
-        <!-- Injected by JS -->
-      </div>
+      <div class="product-grid" id="product-grid"></div>
       <input type="hidden" id="product_id" />
       <input type="hidden" id="product_name" />
       <input type="hidden" id="category" />
       <input type="hidden" id="unit_price" />
-      <div class="field" style="margin-top:4px;">
-        <span class="err-msg" id="product-err" style="display:none;">Please select a service</span>
-      </div>
+      <span class="err-msg" id="product-err" style="display:none;font-size:11px;color:#f25555;">Please select a service</span>
     </div>
 
-    <!-- Quantity -->
     <div class="form-section" style="margin-top:20px;">
       <div class="section-title">Quantity & Notes</div>
       <div class="form-grid two">
@@ -169,7 +150,6 @@
       </div>
     </div>
 
-    <!-- Order Summary -->
     <div class="summary-box" id="summary-box" style="display:none;">
       <div class="summary-row"><span>Service</span><span id="sum-product">—</span></div>
       <div class="summary-row"><span>Category</span><span id="sum-category">—</span></div>
@@ -178,10 +158,8 @@
       <div class="summary-row"><span>Total</span><span id="sum-total">₦0</span></div>
     </div>
 
-    <!-- Alerts -->
     <div class="alert alert-error" id="alert-error"></div>
 
-    <!-- Submit -->
     <div class="form-footer">
       <button class="btn-submit" id="btn-submit" onclick="submitOrder()">
         <span class="btn-text">Submit Order</span>
@@ -193,7 +171,6 @@
   </div>
 </div>
 
-<!-- SUCCESS SCREEN -->
 <div id="success-screen">
   <div class="success-card">
     <div class="success-icon">✅</div>
@@ -208,11 +185,10 @@
 <div class="page-footer">© 2025 Jawtech. All rights reserved.</div>
 
 <script>
-// ── CONFIG — paste your n8n pending webhook URL and Google Sheets Apps Script URL here ──
-const N8N_WEBHOOK  = 'https://impurity-rejoice-gaffe.ngrok-free.dev/webhook/orders';
-const SHEETS_URL   = 'https://script.google.com/macros/s/AKfycby3wz_L5SFWgwLLRAxUJr9ZEq7Oz1ocMfOS49Xm7ZmNxOO0hz1Kd9kOUVD1aaxFeTXMDA/exec';
+// ── CONFIG ──
+const N8N_WEBHOOK = 'https://impurity-rejoice-gaffe.ngrok-free.dev/webhook/orders';
+const SHEETS_URL  = 'https://script.google.com/macros/s/AKfycby3wz_L5SFWgwLLRAxUJr9ZEq7Oz1ocMfOS49Xm7ZmNxOO0hz1Kd9kOUVD1aaxFeTXMDA/exec';
 
-// ── Products ──
 const PRODUCTS = [
   {id:'P001', name:'Web Design Package',  category:'Digital Services', price:84000,  icon:'💻'},
   {id:'P002', name:'SEO Audit',           category:'Marketing',        price:50000,  icon:'📈'},
@@ -228,10 +204,8 @@ const PRODUCTS = [
 
 let selectedProduct = null;
 
-// ── Render product cards ──
 function renderProducts(){
-  const grid = document.getElementById('product-grid');
-  grid.innerHTML = PRODUCTS.map(p => `
+  document.getElementById('product-grid').innerHTML = PRODUCTS.map(p => `
     <div class="product-card" id="pc-${p.id}" onclick="selectProduct('${p.id}')">
       <div class="product-icon">${p.icon}</div>
       <div class="product-name">${p.name}</div>
@@ -247,11 +221,11 @@ function selectProduct(id){
   selectedProduct = p;
   document.querySelectorAll('.product-card').forEach(el => el.classList.remove('selected'));
   document.getElementById('pc-' + id).classList.add('selected');
-  document.getElementById('product_id').value    = p.id;
-  document.getElementById('product_name').value  = p.name;
-  document.getElementById('category').value      = p.category;
-  document.getElementById('unit_price').value    = p.price;
-  document.getElementById('unit_price_display').value = '₦' + p.price.toLocaleString('en-NG');
+  document.getElementById('product_id').value          = p.id;
+  document.getElementById('product_name').value        = p.name;
+  document.getElementById('category').value            = p.category;
+  document.getElementById('unit_price').value          = p.price;
+  document.getElementById('unit_price_display').value  = '₦' + p.price.toLocaleString('en-NG');
   document.getElementById('product-err').style.display = 'none';
   updateSummary();
 }
@@ -260,31 +234,23 @@ function updateSummary(){
   if(!selectedProduct) return;
   const qty   = parseInt(document.getElementById('quantity').value) || 1;
   const total = selectedProduct.price * qty;
-  document.getElementById('summary-box').style.display  = 'block';
-  document.getElementById('sum-product').textContent    = selectedProduct.name;
-  document.getElementById('sum-category').textContent   = selectedProduct.category;
-  document.getElementById('sum-qty').textContent        = qty;
-  document.getElementById('sum-unit').textContent       = '₦' + selectedProduct.price.toLocaleString('en-NG');
-  document.getElementById('sum-total').textContent      = '₦' + total.toLocaleString('en-NG');
+  document.getElementById('summary-box').style.display = 'block';
+  document.getElementById('sum-product').textContent   = selectedProduct.name;
+  document.getElementById('sum-category').textContent  = selectedProduct.category;
+  document.getElementById('sum-qty').textContent       = qty;
+  document.getElementById('sum-unit').textContent      = '₦' + selectedProduct.price.toLocaleString('en-NG');
+  document.getElementById('sum-total').textContent     = '₦' + total.toLocaleString('en-NG');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderProducts();
-  document.getElementById('quantity').addEventListener('input', updateSummary);
-});
-
-// ── Generate IDs ──
 function genOrderId(){ return String(Date.now()).slice(-6); }
 function today(){ return new Date().toISOString().split('T')[0]; }
 
-// ── Validate ──
 function validate(){
   let ok = true;
-  const req = ['first_name','last_name','customer_email','quantity'];
-  req.forEach(id => {
+  ['first_name','last_name','customer_email','quantity'].forEach(id => {
     const el = document.getElementById(id);
-    const empty = !el.value.trim() || (id==='quantity' && parseInt(el.value)<1);
-    const emailInvalid = id==='customer_email' && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+    const empty = !el.value.trim() || (id === 'quantity' && parseInt(el.value) < 1);
+    const emailInvalid = id === 'customer_email' && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
     el.classList.toggle('error', empty || emailInvalid);
     if(empty || emailInvalid) ok = false;
   });
@@ -295,7 +261,6 @@ function validate(){
   return ok;
 }
 
-// ── Submit ──
 async function submitOrder(){
   if(!validate()) return;
 
@@ -304,8 +269,8 @@ async function submitOrder(){
   btn.disabled = true;
   document.getElementById('alert-error').classList.remove('show');
 
-  const orderId   = genOrderId();
-  const qty       = parseInt(document.getElementById('quantity').value) || 1;
+  const orderId    = genOrderId();
+  const qty        = parseInt(document.getElementById('quantity').value) || 1;
   const totalPrice = selectedProduct.price * qty;
 
   const order = {
@@ -324,34 +289,30 @@ async function submitOrder(){
     notes:          document.getElementById('notes').value.trim(),
   };
 
-  try {
+  try{
     // 1. Write to Google Sheets via Apps Script
-    if(SHEETS_URL){
-      await fetch(SHEETS_URL, {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(order),
-        mode: 'no-cors'
-      });
-    }
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(order),
+      mode: 'no-cors'
+    });
 
     // 2. Fire n8n pending webhook
-    if(N8N_WEBHOOK){
-      await fetch(N8N_WEBHOOK, {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({body: order}),
-        mode: 'no-cors'
-      });
-    }
+    await fetch(N8N_WEBHOOK, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({body: order}),
+      mode: 'no-cors'
+    });
 
-    // 3. Show success
-    document.getElementById('success-ref').textContent = 'Order #' + orderId;
-    document.getElementById('form-wrap').style.display  = 'none';
-    document.getElementById('success-screen').style.display = 'block';
+    // 3. Show success screen
+    document.getElementById('success-ref').textContent         = 'Order #' + orderId;
+    document.getElementById('form-wrap').style.display         = 'none';
+    document.getElementById('success-screen').style.display    = 'block';
     window.scrollTo({top:0, behavior:'smooth'});
 
-  } catch(e) {
+  }catch(e){
     const err = document.getElementById('alert-error');
     err.textContent = 'Something went wrong. Please try again or contact us directly.';
     err.classList.add('show');
@@ -361,16 +322,13 @@ async function submitOrder(){
 }
 
 function resetForm(){
-  // Reset button state first
   const btn = document.getElementById('btn-submit');
   btn.classList.remove('loading');
   btn.disabled = false;
 
-  // Reset screens
   document.getElementById('form-wrap').style.display      = 'block';
   document.getElementById('success-screen').style.display = 'none';
 
-  // Clear all fields
   document.getElementById('first_name').value         = '';
   document.getElementById('last_name').value          = '';
   document.getElementById('customer_email').value     = '';
@@ -382,7 +340,6 @@ function resetForm(){
   document.getElementById('category').value           = '';
   document.getElementById('unit_price').value         = '';
 
-  // Reset UI states
   document.getElementById('summary-box').style.display    = 'none';
   document.getElementById('alert-error').classList.remove('show');
   document.getElementById('product-err').style.display    = 'none';
@@ -392,6 +349,11 @@ function resetForm(){
   selectedProduct = null;
   window.scrollTo({top:0, behavior:'smooth'});
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  document.getElementById('quantity').addEventListener('input', updateSummary);
+});
 </script>
 </body>
 </html>
