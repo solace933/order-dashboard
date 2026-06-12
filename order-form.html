@@ -57,7 +57,7 @@
   .summary-row:last-child span:last-child{color:var(--accent);}
 
   .form-footer{padding:20px 24px 24px;}
-  .btn-submit{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;letter-spacing:.01em;}
+  .btn-submit{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;}
   .btn-submit:hover{opacity:.9;}
   .btn-submit:active{transform:scale(.99);}
   .btn-submit:disabled{opacity:.6;cursor:not-allowed;}
@@ -126,7 +126,7 @@
       <input type="hidden" id="product_name" />
       <input type="hidden" id="category" />
       <input type="hidden" id="unit_price" />
-      <span class="err-msg" id="product-err" style="display:none;font-size:11px;color:#f25555;">Please select a service</span>
+      <span class="err-msg" id="product-err" style="display:none;font-size:11px;color:#f25555;margin-top:4px;">Please select a service</span>
     </div>
 
     <div class="form-section" style="margin-top:20px;">
@@ -290,15 +290,16 @@ async function submitOrder(){
   };
 
   try{
-    // 1. Write to Google Sheets via Apps Script
+    // Send to Google Sheets via FormData (bypasses CORS restrictions)
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(order));
     await fetch(SHEETS_URL, {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(order),
+      body: formData,
       mode: 'no-cors'
     });
 
-    // 2. Fire n8n pending webhook
+    // Fire n8n pending webhook
     await fetch(N8N_WEBHOOK, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -306,10 +307,10 @@ async function submitOrder(){
       mode: 'no-cors'
     });
 
-    // 3. Show success screen
-    document.getElementById('success-ref').textContent         = 'Order #' + orderId;
-    document.getElementById('form-wrap').style.display         = 'none';
-    document.getElementById('success-screen').style.display    = 'block';
+    // Show success screen
+    document.getElementById('success-ref').textContent      = 'Order #' + orderId;
+    document.getElementById('form-wrap').style.display      = 'none';
+    document.getElementById('success-screen').style.display = 'block';
     window.scrollTo({top:0, behavior:'smooth'});
 
   }catch(e){
@@ -328,24 +329,21 @@ function resetForm(){
 
   document.getElementById('form-wrap').style.display      = 'block';
   document.getElementById('success-screen').style.display = 'none';
-
-  document.getElementById('first_name').value         = '';
-  document.getElementById('last_name').value          = '';
-  document.getElementById('customer_email').value     = '';
-  document.getElementById('quantity').value           = '1';
-  document.getElementById('notes').value              = '';
-  document.getElementById('unit_price_display').value = '';
-  document.getElementById('product_id').value         = '';
-  document.getElementById('product_name').value       = '';
-  document.getElementById('category').value           = '';
-  document.getElementById('unit_price').value         = '';
-
+  document.getElementById('first_name').value             = '';
+  document.getElementById('last_name').value              = '';
+  document.getElementById('customer_email').value         = '';
+  document.getElementById('quantity').value               = '1';
+  document.getElementById('notes').value                  = '';
+  document.getElementById('unit_price_display').value     = '';
+  document.getElementById('product_id').value             = '';
+  document.getElementById('product_name').value           = '';
+  document.getElementById('category').value               = '';
+  document.getElementById('unit_price').value             = '';
   document.getElementById('summary-box').style.display    = 'none';
   document.getElementById('alert-error').classList.remove('show');
   document.getElementById('product-err').style.display    = 'none';
   document.querySelectorAll('.product-card').forEach(el   => el.classList.remove('selected'));
   document.querySelectorAll('.field input,.field select').forEach(el => el.classList.remove('error'));
-
   selectedProduct = null;
   window.scrollTo({top:0, behavior:'smooth'});
 }
