@@ -68,6 +68,7 @@
 
   .alert{border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;margin:0 24px 16px;display:none;line-height:1.6;}
   .alert.show{display:block;}
+  .alert-success{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success-text);}
   .alert-error{background:var(--error-bg);border:1px solid var(--error-border);color:var(--error-text);}
 
   #success-screen{display:none;max-width:640px;margin:40px auto;padding:0 16px;}
@@ -126,7 +127,7 @@
       <input type="hidden" id="product_name" />
       <input type="hidden" id="category" />
       <input type="hidden" id="unit_price" />
-      <span class="err-msg" id="product-err" style="display:none;font-size:11px;color:#f25555;margin-top:4px;">Please select a service</span>
+      <span id="product-err" style="display:none;font-size:11px;color:#f25555;margin-top:4px;">Please select a service</span>
     </div>
 
     <div class="form-section" style="margin-top:20px;">
@@ -248,7 +249,7 @@ function today(){ return new Date().toISOString().split('T')[0]; }
 function validate(){
   let ok = true;
   ['first_name','last_name','customer_email','quantity'].forEach(id => {
-    const el = document.getElementById(id);
+    const el    = document.getElementById(id);
     const empty = !el.value.trim() || (id === 'quantity' && parseInt(el.value) < 1);
     const emailInvalid = id === 'customer_email' && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
     el.classList.toggle('error', empty || emailInvalid);
@@ -290,40 +291,35 @@ async function submitOrder(){
   };
 
   try{
-    // Send to Google Sheets via FormData (bypasses CORS restrictions)
+    // Step 1 — Write to Google Sheets via Apps Script
     const formData = new FormData();
     formData.append('data', JSON.stringify(order));
-    await fetch(SHEETS_URL, {
+    const sheetRes = await fetch(SHEETS_URL, {
       method: 'POST',
-      body: formData,
-      const formData = new FormData();
-formData.append('data', JSON.stringify(order));
-const res = await fetch(SHEETS_URL, {
-  method: 'POST',
-  body: formData
-});
-const result = await res.json();
-console.log(result);
+      body:   formData,
     });
+    const sheetResult = await sheetRes.json();
+    if(!sheetResult.success){
+      throw new Error('Sheet error: ' + sheetResult.error);
+    }
 
-    // Fire n8n pending webhook
+    // Step 2 — Fire n8n pending webhook
     await fetch(N8N_WEBHOOK, {
-      method: 'POST',
+      method:  'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({body: order}),
-      mode: 'no-cors'
+      body:    JSON.stringify({body: order}),
+      mode:    'no-cors'
     });
 
-    // Show success screen
+    // Step 3 — Show success screen
     document.getElementById('success-ref').textContent      = 'Order #' + orderId;
     document.getElementById('form-wrap').style.display      = 'none';
     document.getElementById('success-screen').style.display = 'block';
     window.scrollTo({top:0, behavior:'smooth'});
 
   }catch(e){
-    const err = document.getElementById('alert-error');
-    err.textContent = 'Something went wrong. Please try again or contact us directly.';
-    err.classList.add('show');
+    document.getElementById('alert-error').textContent = 'Submission failed: ' + e.message + '. Please try again.';
+    document.getElementById('alert-error').classList.add('show');
     btn.classList.remove('loading');
     btn.disabled = false;
   }
