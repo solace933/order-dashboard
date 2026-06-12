@@ -175,7 +175,6 @@
 
 <script>
 // ── CONFIG ──
-// Form sends ONLY to n8n. n8n handles writing to Google Sheets + sending email.
 const N8N_WEBHOOK = 'https://impurity-rejoice-gaffe.ngrok-free.dev/webhook/orders';
 
 const PRODUCTS = [
@@ -262,7 +261,8 @@ async function submitOrder(){
   const qty        = parseInt(document.getElementById('quantity').value) || 1;
   const totalPrice = selectedProduct.price * qty;
 
-  const order = {
+  // This is the exact same structure Postman uses that works
+  const payload = {
     order_id:       orderId,
     product_id:     selectedProduct.id,
     product_name:   selectedProduct.name,
@@ -279,16 +279,13 @@ async function submitOrder(){
   };
 
   try{
-    // Send everything to n8n — n8n writes to sheet and sends email
     await fetch(N8N_WEBHOOK, {
       method:  'POST',
       headers: {'Content-Type':'application/json'},
-      body:    JSON.stringify({body: order}),
+      body:    JSON.stringify(payload),
       mode:    'no-cors'
     });
 
-    // Show success — no-cors means we cannot read the response
-    // but if fetch did not throw, the request was sent successfully
     document.getElementById('success-ref').textContent      = 'Order #' + orderId;
     document.getElementById('form-wrap').style.display      = 'none';
     document.getElementById('success-screen').style.display = 'block';
