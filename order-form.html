@@ -296,7 +296,14 @@ async function submitOrder(){
     await fetch(SHEETS_URL, {
       method: 'POST',
       body: formData,
-      mode: 'no-cors'
+      const formData = new FormData();
+formData.append('data', JSON.stringify(order));
+const res = await fetch(SHEETS_URL, {
+  method: 'POST',
+  body: formData
+});
+const result = await res.json();
+console.log(result);
     });
 
     // Fire n8n pending webhook
