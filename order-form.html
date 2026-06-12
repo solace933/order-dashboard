@@ -15,16 +15,13 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
-
   .header{background:var(--accent);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;}
   .header-logo{font-size:18px;font-weight:700;color:#fff;letter-spacing:-.3px;}
   .header-sub{font-size:12px;color:#a8c0ff;}
-
   .hero{background:linear-gradient(135deg,#1a3f8f 0%,#2d5fd4 100%);padding:40px 24px 48px;text-align:center;}
   .hero-title{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.5px;margin-bottom:8px;}
   .hero-sub{font-size:14px;color:#a8c0ff;line-height:1.6;max-width:420px;margin:0 auto;}
   @media(min-width:600px){.hero-title{font-size:32px;}}
-
   .form-wrap{max-width:640px;margin:-24px auto 40px;padding:0 16px;}
   .form-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);}
   .form-section{padding:24px 24px 0;}
@@ -39,7 +36,6 @@
   .field input.error,.field select.error{border-color:#f25555;}
   .field .err-msg{font-size:11px;color:#f25555;display:none;}
   .field input.error ~ .err-msg,.field select.error ~ .err-msg{display:block;}
-
   .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
   @media(min-width:500px){.product-grid{grid-template-columns:repeat(3,1fr);}}
   .product-card{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 10px;cursor:pointer;transition:all .15s;text-align:center;background:var(--surface);}
@@ -49,13 +45,11 @@
   .product-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;}
   .product-price{font-size:11px;color:var(--muted);}
   .product-cat{font-size:10px;color:var(--hint);margin-top:2px;}
-
   .summary-box{background:var(--accent-light);border:1px solid var(--accent-border);border-radius:var(--radius-sm);padding:16px;margin:16px 24px 0;}
   .summary-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:var(--muted);}
   .summary-row:last-child{margin-bottom:0;font-size:15px;font-weight:700;color:var(--accent);border-top:1px solid var(--accent-border);padding-top:8px;margin-top:8px;}
   .summary-row span:last-child{color:var(--text);font-weight:500;}
   .summary-row:last-child span:last-child{color:var(--accent);}
-
   .form-footer{padding:20px 24px 24px;}
   .btn-submit{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;}
   .btn-submit:hover{opacity:.9;}
@@ -65,12 +59,9 @@
   .btn-submit.loading .btn-text{display:none;}
   .btn-submit.loading .spinner{display:block;}
   @keyframes spin{to{transform:rotate(360deg)}}
-
   .alert{border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;margin:0 24px 16px;display:none;line-height:1.6;}
   .alert.show{display:block;}
-  .alert-success{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success-text);}
   .alert-error{background:var(--error-bg);border:1px solid var(--error-border);color:var(--error-text);}
-
   #success-screen{display:none;max-width:640px;margin:40px auto;padding:0 16px;}
   .success-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:40px 24px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.08);}
   .success-icon{font-size:52px;margin-bottom:16px;}
@@ -78,7 +69,6 @@
   .success-sub{font-size:14px;color:var(--muted);line-height:1.6;max-width:360px;margin:0 auto 24px;}
   .success-ref{background:var(--accent-light);border:1px solid var(--accent-border);border-radius:var(--radius-sm);padding:12px 20px;display:inline-block;font-size:13px;color:var(--accent);font-weight:600;margin-bottom:24px;}
   .btn-new{padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:500;cursor:pointer;}
-
   .page-footer{text-align:center;padding:16px;font-size:11px;color:var(--hint);}
 </style>
 </head>
@@ -96,7 +86,6 @@
 
 <div class="form-wrap" id="form-wrap">
   <div class="form-card">
-
     <div class="form-section">
       <div class="section-title">Customer Details</div>
       <div class="form-grid two">
@@ -168,7 +157,6 @@
       </button>
       <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--hint);">Your order will be confirmed via email</div>
     </div>
-
   </div>
 </div>
 
@@ -187,8 +175,8 @@
 
 <script>
 // ── CONFIG ──
+// Form sends ONLY to n8n. n8n handles writing to Google Sheets + sending email.
 const N8N_WEBHOOK = 'https://impurity-rejoice-gaffe.ngrok-free.dev/webhook/orders';
-const SHEETS_URL  = 'https://script.google.com/macros/s/AKfycby3wz_L5SFWgwLLRAxUJr9ZEq7Oz1ocMfOS49Xm7ZmNxOO0hz1Kd9kOUVD1aaxFeTXMDA/exec';
 
 const PRODUCTS = [
   {id:'P001', name:'Web Design Package',  category:'Digital Services', price:84000,  icon:'💻'},
@@ -249,8 +237,8 @@ function today(){ return new Date().toISOString().split('T')[0]; }
 function validate(){
   let ok = true;
   ['first_name','last_name','customer_email','quantity'].forEach(id => {
-    const el    = document.getElementById(id);
-    const empty = !el.value.trim() || (id === 'quantity' && parseInt(el.value) < 1);
+    const el           = document.getElementById(id);
+    const empty        = !el.value.trim() || (id === 'quantity' && parseInt(el.value) < 1);
     const emailInvalid = id === 'customer_email' && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
     el.classList.toggle('error', empty || emailInvalid);
     if(empty || emailInvalid) ok = false;
@@ -291,19 +279,7 @@ async function submitOrder(){
   };
 
   try{
-    // Step 1 — Write to Google Sheets via Apps Script
-    const formData = new FormData();
-    formData.append('data', JSON.stringify(order));
-    const sheetRes = await fetch(SHEETS_URL, {
-      method: 'POST',
-      body:   formData,
-    });
-    const sheetResult = await sheetRes.json();
-    if(!sheetResult.success){
-      throw new Error('Sheet error: ' + sheetResult.error);
-    }
-
-    // Step 2 — Fire n8n pending webhook
+    // Send everything to n8n — n8n writes to sheet and sends email
     await fetch(N8N_WEBHOOK, {
       method:  'POST',
       headers: {'Content-Type':'application/json'},
@@ -311,14 +287,15 @@ async function submitOrder(){
       mode:    'no-cors'
     });
 
-    // Step 3 — Show success screen
+    // Show success — no-cors means we cannot read the response
+    // but if fetch did not throw, the request was sent successfully
     document.getElementById('success-ref').textContent      = 'Order #' + orderId;
     document.getElementById('form-wrap').style.display      = 'none';
     document.getElementById('success-screen').style.display = 'block';
     window.scrollTo({top:0, behavior:'smooth'});
 
   }catch(e){
-    document.getElementById('alert-error').textContent = 'Submission failed: ' + e.message + '. Please try again.';
+    document.getElementById('alert-error').textContent = 'Could not submit order. Please check your connection and try again.';
     document.getElementById('alert-error').classList.add('show');
     btn.classList.remove('loading');
     btn.disabled = false;
@@ -329,7 +306,6 @@ function resetForm(){
   const btn = document.getElementById('btn-submit');
   btn.classList.remove('loading');
   btn.disabled = false;
-
   document.getElementById('form-wrap').style.display      = 'block';
   document.getElementById('success-screen').style.display = 'none';
   document.getElementById('first_name').value             = '';
